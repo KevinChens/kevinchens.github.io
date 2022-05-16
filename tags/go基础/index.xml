@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>go基础 - 标签 - 尘市</title>
+        <link>https://kevinchens.github.io/tags/go%E5%9F%BA%E7%A1%80/</link>
+        <description>go基础 - 标签 - 尘市</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>iamchens@outlook.com (chens)</managingEditor>
+            <webMaster>iamchens@outlook.com (chens)</webMaster><lastBuildDate>Thu, 12 May 2022 15:36:50 &#43;0800</lastBuildDate><atom:link href="https://kevinchens.github.io/tags/go%E5%9F%BA%E7%A1%80/" rel="self" type="application/rss+xml" /><item>
+    <title>Golang基础语法</title>
+    <link>https://kevinchens.github.io/2022/05/go-basic-syntax/</link>
+    <pubDate>Thu, 12 May 2022 15:36:50 &#43;0800</pubDate><author>iamchens@outlook.com (chens)</author><guid>https://kevinchens.github.io/2022/05/go-basic-syntax/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://w.wallhaven.cc/full/e7/wallhaven-e7lv6k.png" referrerpolicy="no-referrer">
+            </div>Golang基础语法 | 青训笔记 这是我参与「第三届青训营 -后端场」笔记创作活动的的第1篇笔记。 从Go语言特性入手，讲述了Golang区别于其他]]></description>
+</item>
+</channel>
+</rss>

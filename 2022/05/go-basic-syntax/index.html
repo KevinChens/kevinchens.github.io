@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Golang基础语法 - 尘市</title><meta name="description" content="Golang基础，包教包会，不会......，那就多读几遍"><meta property="og:title" content="Golang基础语法" />
+<meta property="og:description" content="Golang基础，包教包会，不会......，那就多读几遍" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://kevinchens.github.io/2022/05/go-basic-syntax/" /><meta property="og:image" content="https://kevinchens.github.io/chens.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-05-12T15:36:50+08:00" />
+<meta property="article:modified_time" content="2022-05-12T15:36:50+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://kevinchens.github.io/chens.png"/>
+
+<meta name="twitter:title" content="Golang基础语法"/>
+<meta name="twitter:description" content="Golang基础，包教包会，不会......，那就多读几遍"/>
+<meta name="application-name" content="尘市">
+<meta name="apple-mobile-web-app-title" content="尘市"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://kevinchens.github.io/2022/05/go-basic-syntax/" /><link rel="stylesheet" href="/css/page.min.css"><link rel="stylesheet" href="/css/home.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Golang基础语法",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/kevinchens.github.io\/2022\/05\/go-basic-syntax\/"
+        },"image": ["https:\/\/kevinchens.github.io\/images\/Apple-Devices-Preview.webp"],"genre": "posts","keywords": "go基础","wordcount":  4400 ,
+        "url": "https:\/\/kevinchens.github.io\/2022\/05\/go-basic-syntax\/","datePublished": "2022-05-12T15:36:50+08:00","dateModified": "2022-05-12T15:36:50+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "chens"
+            },"description": "Golang基础，包教包会，不会......，那就多读几遍"
+    }
+    </script></head><body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="尘市"><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="https://github.com/KevinChens/kevinchens.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="尘市"><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="https://github.com/KevinChens/kevinchens.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><div class="menu-item"><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single" data-toc="enable"><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://w.wallhaven.cc/full/e7/wallhaven-e7lv6k.png"
+        data-srcset="https://w.wallhaven.cc/full/e7/wallhaven-e7lv6k.png, https://w.wallhaven.cc/full/e7/wallhaven-e7lv6k.png 1.5x, https://w.wallhaven.cc/full/e7/wallhaven-e7lv6k.png 2x"
+        data-sizes="auto"
+        alt="https://w.wallhaven.cc/full/e7/wallhaven-e7lv6k.png"
+        title="Golang基础，包教包会，不会......，那就多读几遍" /></div><div class="single-card" data-image="true"><h2 class="single-title animated flipInX">Golang基础语法</h2><div class="post-meta">
+                <div class="post-meta-line"><span class="post-author"><a href="http://kevinchens.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>chens</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/golang/"><i class="far fa-folder fa-fw"></i>golang</a></span></div>
+                <div class="post-meta-line"><i class="far fa-calendar-check fa-fw"></i>&nbsp;<time datetime="2022-05-12">2022-05-12</time>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4400 字</span>&nbsp;
+                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 9 分钟</span>&nbsp;
+    
+
+    
+        
+
+        
+        
+            <span id="busuanzi_container_value_page_pv"><i class="far fa-eye fa-fw"></i>
+                
+                <span id="busuanzi_value_page_pv"></span>&nbsp;次阅读</span>
+        
+    
+</div>
+            </div>
+            
+            <hr><div class="details toc" id="toc-static"  data-kept="">
+                    <div class="details-summary toc-title">
+                        <span>目录</span>
+                        <span><i class="details-icon fas fa-angle-right"></i></span>
+                    </div>
+                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#golang基础语法--青训笔记">Golang基础语法 | 青训笔记</a>
+      <ul>
+        <li><a href="#go语言特性">Go语言特性</a></li>
+        <li><a href="#重点语法">重点语法</a>
+          <ul>
+            <li><a href="#数据类型">数据类型</a></li>
+            <li><a href="#函数">函数</a></li>
+          </ul>
+        </li>
+        <li><a href="#常用标准库">常用标准库</a>
+          <ul>
+            <li><a href="#fmt">fmt</a></li>
+            <li><a href="#time">time</a></li>
+            <li><a href="#strconv">strconv</a></li>
+            <li><a href="#strings">strings</a></li>
+            <li><a href="#encodingjson">encoding/json</a></li>
+          </ul>
+        </li>
+        <li><a href="#实战练习">实战练习</a>
+          <ul>
+            <li><a href="#命令行词典">命令行词典</a></li>
+            <li><a href="#proxy">proxy</a></li>
+          </ul>
+        </li>
+        <li><a href="#总结">总结</a></li>
+        <li><a href="#引用参考">引用参考</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </div><div class="content" id="content"><h2 id="golang基础语法--青训笔记">Golang基础语法 | 青训笔记</h2>
+<p>这是我参与「第三届青训营 -后端场」笔记创作活动的的第1篇笔记。</p>
+<p>从Go语言特性入手，讲述了Golang区别于其他语言的优点，通过Go by Example对基础语法进行了巩固学习。<br>
+然后对Golang常用标准库的使用和注意事项通过代码示例，最后是命令行词典和socks5代理两个小项目的实践，进一步了解Golang。</p>
+<h3 id="go语言特性">Go语言特性</h3>
+<ul>
+<li>高并发，高性能<br>
+Golang是基于其他语言的痛点，开发的新时代语言。<br>
+天生支持高并发，能够充分利用多核CPU，高性能开发简单。</li>
+<li>简单易学</li>
+<li>标准库，工具链丰富</li>
+<li>静态链接，快速编译</li>
+<li>跨平台<br>
+多平台，多系统，可交叉编译，无需配置编译环境。</li>
+<li>垃圾回收<br>
+自动管理内存释放，专注业务逻辑编程。</li>
+</ul>
+<p><strong>应用场景</strong></p>
+<ul>
+<li>公司<br>
+使用Golang开发的公司越来越多，比如国内的ByteDance，Tencent，美团，七牛云等，国外的Google，Facebook等。</li>
+<li>领域<br>
+Golang在云计算，微服务，大数据，区块链，物联网等领域都有广泛的使用，其中在云计算，微服务领域有非常高的市场占有率。</li>
+<li>云原生组件<br>
+Docker，Kubernetes，etcd，Prometheus等全是通过Golang实现。</li>
+</ul>
+<h3 id="重点语法">重点语法</h3>
+<p>通过Go by Example进行入门上手，对重点语法进行总结归纳。下面展示核心代码部分，完整源码，见<a href="https://github.com/KevinChens/youth-camp/tree/main/lesson1/go-by-example" target="_blank" rel="noopener noreffer">Github仓库</a></p>
+<h4 id="数据类型">数据类型</h4>
+<ol>
+<li>string支持<code>+</code>拼接，也可以通过<code>fmt.Sprintf()</code>，<code>strings.Join()</code>和<code>buffer.WriteString()</code>，<code>build.WriteString()</code>进行拼接。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="nx">str1</span><span class="p">,</span> <span class="nx">str2</span> <span class="o">:=</span> <span class="s">&#34;go&#34;</span><span class="p">,</span> <span class="s">&#34;lang&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">str1</span> <span class="o">+</span> <span class="nx">str2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;%s%s&#34;</span><span class="p">,</span> <span class="nx">str1</span><span class="p">,</span> <span class="nx">str2</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">strings</span><span class="p">.</span><span class="nf">Join</span><span class="p">([]</span><span class="kt">string</span><span class="p">{</span><span class="nx">str1</span><span class="p">,</span> <span class="nx">str2</span><span class="p">},</span> <span class="s">&#34;&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">bt</span> <span class="nx">bytes</span><span class="p">.</span><span class="nx">Buffer</span>
+</span></span><span class="line"><span class="cl"><span class="nx">bt</span><span class="p">.</span><span class="nf">WriteString</span><span class="p">(</span><span class="nx">str1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">bt</span><span class="p">.</span><span class="nf">WriteString</span><span class="p">(</span><span class="nx">str2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">bt</span><span class="p">.</span><span class="nf">String</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;go&#34;</span> <span class="o">+</span> <span class="s">&#34;lang&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">build</span> <span class="nx">strings</span><span class="p">.</span><span class="nx">Builder</span>
+</span></span><span class="line"><span class="cl"><span class="nx">build</span><span class="p">.</span><span class="nf">WriteString</span><span class="p">(</span><span class="nx">str1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">build</span><span class="p">.</span><span class="nf">WriteString</span><span class="p">(</span><span class="nx">str2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">build</span><span class="p">.</span><span class="nf">String</span><span class="p">())</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>slice比array更常用，slice可以组成多维数据结构，内部长度可以不一致。slice可以模拟<code>stack</code>，<code>queue</code>。</li>
+<li>map的键值对是无序的，可以自行按照<code>key</code>或<code>value</code>进行排序。检测key是否存在：</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="nx">m</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">int</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="nx">v</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">m</span><span class="p">[</span><span class="s">&#34;zhangsan&#34;</span><span class="p">];</span> <span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;key exists, value:&#34;</span><span class="p">,</span> <span class="nx">v</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="4">
+<li>range可对slice，map，string进行遍历，第一个参数是index(key)，第二个参数是value。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="nx">slice</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">int</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">v</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">slice</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">v</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="5">
+<li>Go支持指针，允许通过引用传递来传递值和修改值。<br>
+值传递是数据的拷贝，会分配新的内存存储；<br>
+引用传递是指针的拷贝，共享数据的内存地址，通常使用指针是为了<strong>修改值或节约内存空间</strong>。</li>
+<li>string等价于<code>[]byte</code>，Golang中字符是<code>rune</code>类型（uint8）, 用单引号括起来的值。</li>
+<li>struct是带类型的字段集合，是可变的，通过构造函数封装创建结构体实例是习惯用法。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">User</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">Name</span> <span class="kt">string</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">Age</span> <span class="kt">int</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">Constructor</span><span class="p">()</span> <span class="nx">User</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">User</span><span class="p">{</span><span class="nx">Name</span><span class="p">:</span> <span class="s">&#34;zhangsan&#34;</span><span class="p">,</span> <span class="nx">Age</span><span class="p">:</span> <span class="s">&#34;22&#34;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="函数">函数</h4>
+<ol>
+<li>对于多返回值函数，可用空白标识符<code>_</code>仅返回需要的值：</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">calc</span><span class="p">()</span> <span class="p">(</span><span class="nx">sum</span><span class="p">,</span> <span class="nx">sub</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="mi">1</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="o">-</span><span class="mi">2</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">sum</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nf">calc</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>变参函数的使用：</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">sum</span><span class="p">(</span><span class="nx">nums</span> <span class="o">...</span><span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">ans</span> <span class="o">:=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">num</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">nums</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">ans</span> <span class="o">+=</span> <span class="nx">num</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">ans</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">ans</span> <span class="o">:=</span> <span class="nf">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">ans</span> <span class="p">=</span> <span class="nf">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 也可以传slice
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">nums</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">int</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nx">ans</span> <span class="p">=</span> <span class="nf">sum</span><span class="p">(</span><span class="nx">nums</span><span class="o">...</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li>interface是方法签名的集合，在Go中实现一个interface就是实现其中所有方法。<br>
+如果一个变量实现了接口，就可以调用接口的方法。</li>
+<li>可以为值类型或指针类型的接收者定义方法，想避免调用方法时产生数据拷贝或想修改接收者的值，可以选用指针来调用方法。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">User</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">Name</span> <span class="kt">string</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">Age</span> <span class="kt">int</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">u</span> <span class="nx">User</span><span class="p">)</span> <span class="nf">ModifyInfo1</span><span class="p">()</span> <span class="nx">User</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">u</span><span class="p">.</span><span class="nx">Name</span> <span class="p">=</span> <span class="s">&#34;lisi&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">u</span><span class="p">.</span><span class="nx">Age</span> <span class="p">=</span> <span class="mi">15</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// u修改不成功
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">return</span> <span class="nx">u</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">u</span> <span class="o">*</span><span class="nx">User</span><span class="p">)</span> <span class="nf">ModifyInfo2</span><span class="p">()</span> <span class="o">*</span><span class="nx">User</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">u</span><span class="p">.</span><span class="nx">Name</span> <span class="p">=</span> <span class="s">&#34;lisi&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">u</span><span class="p">.</span><span class="nx">Age</span> <span class="p">=</span> <span class="mi">15</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// u修改成功
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">return</span> <span class="nx">u</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="5">
+<li>Go习惯用独立的，明确的返回值来传递错误信息。函数的最后一个返回值常常是error类型的错误，<code>errors.New</code>使用给定的错误信息构造一个基本的error值。也可以使用Error()方法，自定义error类型。<br>
+在if的同一行进行错误检测是Go常用的方式。如果想在程序中使用自定义错误类型的数据，需要通过类型断言得到这个自定义错误类型的实例。</li>
+</ol>
+<h3 id="常用标准库">常用标准库</h3>
+<h4 id="fmt">fmt</h4>
+<p>输出：<code>PrintXXX</code>, <code>FprintXXX</code>, <code>SprintXXX</code>, <code>ErrorfXXX</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Print</span><span class="p">(</span><span class="s">&#34;不换行&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">str</span> <span class="o">:=</span> <span class="s">&#34;golang&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%s\n&#34;</span><span class="p">,</span> <span class="nx">str</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;有换行&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// Fprint将内容输出到io.Writer类型的变量中，常用在写入内容到文件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">fileObj</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nf">OpenFile</span><span class="p">(</span><span class="s">&#34;./xx.txt&#34;</span><span class="p">,</span> <span class="nx">os</span><span class="p">.</span><span class="nx">O_CREATE</span><span class="p">|</span><span class="nx">os</span><span class="p">.</span><span class="nx">O_WRONLY</span><span class="p">|</span><span class="nx">os</span><span class="p">.</span><span class="nx">O_APPEND</span><span class="p">,</span> <span class="mo">0644</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;打开文件错误，err:&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Fprintf</span><span class="p">(</span><span class="nx">fielObj</span><span class="p">,</span> <span class="s">&#34;向文件中写入：%s&#34;</span><span class="p">,</span> <span class="nx">str</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Fprintln</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Stdout</span><span class="p">,</span> <span class="s">&#34;向标准输出写入内容&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// Sprint把传入的数据生成并返回一个字符串
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">s1</span> <span class="o">:=</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprint</span><span class="p">(</span><span class="s">&#34;golang&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">s2</span> <span class="o">:=</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;s1:%s&#34;</span><span class="p">,</span> <span class="nx">s1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">s3</span> <span class="o">:=</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprtinln</span><span class="p">(</span><span class="s">&#34;golang有换行&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// Errof根据format参数生成格式化字符串并返回一个包含该字符串的错误, 通常用来自定义错误类型
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">err</span> <span class="o">:=</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Errof</span><span class="p">(</span><span class="s">&#34;这是一个自定义错误类型&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>输入：<code>ScanXXX</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">name</span> <span class="kt">string</span>
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">age</span> <span class="kt">int</span>
+</span></span><span class="line"><span class="cl"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Scan</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">name</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">age</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Scanf</span><span class="p">(</span><span class="s">&#34;%s, %d\n&#34;</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">name</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">age</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Scanln</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">name</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">age</span><span class="p">)</span>  <span class="c1">// 遇到换行才停止
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 如果想要获取包含空格等完整输入内容，可以用bufio.NewReader
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">reader</span> <span class="o">:=</span> <span class="nx">bufio</span><span class="p">.</span><span class="nf">NewReader</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Stdin</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">text</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">reader</span><span class="p">.</span><span class="nf">ReadString</span><span class="p">(</span><span class="s">&#34;\n&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">text</span> <span class="p">=</span> <span class="nx">strings</span><span class="p">.</span><span class="nf">TrimSpace</span><span class="p">(</span><span class="nx">text</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%#v\n&#34;</span><span class="p">,</span> <span class="nx">text</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>输入还有<code>FscanXXX</code>从<code>io.Reader</code>读取和<code>ScanXXX</code>从指定字符串读取。</p>
+<h4 id="time">time</h4>
+<p>时间戳：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="nx">now</span> <span class="o">:=</span> <span class="nx">time</span><span class="p">.</span><span class="nf">Now</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="nx">timestamp1</span> <span class="o">:=</span> <span class="nx">now</span><span class="p">.</span><span class="nf">Unix</span><span class="p">()</span>  <span class="c1">// 时间戳
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">timestamp2</span> <span class="o">:=</span> <span class="nx">now</span><span class="p">.</span><span class="nf">UnixNano</span><span class="p">()</span>  <span class="c1">// 纳秒级时间戳
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>时间间隔：<code>time.Duration</code>表示1ns，<code>time.Second</code>表示1s
+时间格式化，以Go的诞生时间固定格式模板：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="nx">now</span> <span class="o">:=</span> <span class="nx">time</span><span class="p">.</span><span class="nf">Now</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">now</span><span class="p">.</span><span class="nf">Format</span><span class="p">(</span><span class="s">&#34;2006-01-02 15:04:05.000 Mon Jan&#34;</span><span class="p">))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="strconv">strconv</h4>
+<p>string和int的转换：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="nx">num</span> <span class="o">:=</span> <span class="nx">strconv</span><span class="p">.</span><span class="nf">Atoi</span><span class="p">(</span><span class="s">&#34;123&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">str</span> <span class="o">:=</span> <span class="nx">strconv</span><span class="p">.</span><span class="nf">Itoa</span><span class="p">(</span><span class="nx">num</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>ParseXXX</code>将字符串转换为给定类型：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="nx">boolType</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">strconv</span><span class="p">.</span><span class="nf">ParseBool</span><span class="p">(</span><span class="s">&#34;true&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">intType</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">strconv</span><span class="p">.</span><span class="nf">ParseInt</span><span class="p">(</span><span class="s">&#34;23&#34;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>  <span class="c1">// 10进制，int64
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">floatType</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">strconv</span><span class="p">.</span><span class="nf">ParseFloat</span><span class="p">(</span><span class="s">&#34;3.14&#34;</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>  <span class="c1">// float64
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">uintType</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">strconv</span><span class="p">.</span><span class="nf">ParseUint</span><span class="p">(</span><span class="s">&#34;23&#34;</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>  <span class="c1">// uint64
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>FormatXX</code>将给定类型转换为string。</p>
+<h4 id="strings">strings</h4>
+<p>包括了操作字符的常用函数，比如大小写转换，是否有指定前缀或后缀，字符串拼接或分离等。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="nx">str</span> <span class="o">:=</span> <span class="s">&#34;golang&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">strings</span><span class="p">.</span><span class="nf">Contains</span><span class="p">(</span><span class="nx">str</span><span class="p">,</span> <span class="s">&#34;lang&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">strings</span><span class="p">.</span><span class="nf">HasPrefix</span><span class="p">(</span><span class="nx">str</span><span class="p">,</span> <span class="s">&#34;go&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">strings</span><span class="p">.</span><span class="nf">ToUpper</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">strings</span><span class="p">.</span><span class="nf">Replace</span><span class="p">(</span><span class="nx">str</span><span class="p">,</span> <span class="s">&#34;g&#34;</span><span class="p">,</span> <span class="s">&#34;G&#34;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="encodingjson">encoding/json</h4>
+<p>这个包实现了对json的编码和解码。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// 序列化，其他数据类型转json
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">type</span> <span class="nx">User</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">Name</span> <span class="kt">string</span> <span class="s">`json:&#34;name&#34;`</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">Age</span> <span class="kt">int</span>     <span class="s">`json:&#34;age&#34;`</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nx">u</span> <span class="o">:=</span> <span class="nx">User</span><span class="p">{</span><span class="nx">Name</span><span class="p">:</span><span class="s">&#34;zhangsan&#34;</span><span class="p">,</span> <span class="nx">Age</span><span class="p">:</span><span class="s">&#34;18&#34;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nx">buf</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">json</span><span class="p">.</span><span class="nf">Marshal</span><span class="p">(</span><span class="nx">u</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nb">string</span><span class="p">(</span><span class="nx">buf</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 反序列化，json转其他数据类型
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">var</span> <span class="nx">u2</span> <span class="nx">User</span>
+</span></span><span class="line"><span class="cl"><span class="nx">err</span> <span class="p">=</span> <span class="nx">json</span><span class="p">.</span><span class="nf">Unmarshal</span><span class="p">(</span><span class="nx">buf</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">u2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%#v\n&#34;</span><span class="p">,</span> <span class="nx">u2</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="实战练习">实战练习</h3>
+<h4 id="命令行词典">命令行词典</h4>
+<p>需求：调用第三方翻译API实现一个命令行词典，使用格式：<code>simpleDict word</code><br>
+分析：整个过程主要是三个步骤：发送HTTP请求，解析响应json，打印出结果。</p>
+<ol>
+<li>抓包，打开<a href="https://fanyi.caiyunapp.com/#/" target="_blank" rel="noopener noreffer">彩云小译</a>，按F12，输入你要翻译的单词，比如<code>translate</code>, 可在DevTools的Network查看HTTP的post请求信息：<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2022/05/16/SpN2MmcEPJCotjH.jpg"
+        data-srcset="https://s2.loli.net/2022/05/16/SpN2MmcEPJCotjH.jpg, https://s2.loli.net/2022/05/16/SpN2MmcEPJCotjH.jpg 1.5x, https://s2.loli.net/2022/05/16/SpN2MmcEPJCotjH.jpg 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2022/05/16/SpN2MmcEPJCotjH.jpg"
+        title="img" /></li>
+<li>生成代码，右键<code>copy as curl(bash)</code>，复制curl命令。在终端可以返回这个请求的<code>json</code>代码，我们直接使用在线<a href="https://curlconverter.com/" target="_blank" rel="noopener noreffer">curl2go</a>生成该请求的Golang代码, 运行该代码同样能得到请求的<code>json</code>代码，也就是服务器返回给我们的响应体信息：<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2022/05/16/OD7qSxUgzCRsiJ5.jpg"
+        data-srcset="https://s2.loli.net/2022/05/16/OD7qSxUgzCRsiJ5.jpg, https://s2.loli.net/2022/05/16/OD7qSxUgzCRsiJ5.jpg 1.5x, https://s2.loli.net/2022/05/16/OD7qSxUgzCRsiJ5.jpg 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2022/05/16/OD7qSxUgzCRsiJ5.jpg"
+        title="img" /></li>
+<li>从代码可以知道我们需要构造相应的request和response结构体，response结构体可以通过<a href="https://oktools.net/json2go" target="_blank" rel="noopener noreffer">oktools</a>在线生成，只需将DevTools中response的<code>json</code>复制粘贴，转换嵌套即可：<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2022/05/16/I8HtzjJFiSOuglU.jpg"
+        data-srcset="https://s2.loli.net/2022/05/16/I8HtzjJFiSOuglU.jpg, https://s2.loli.net/2022/05/16/I8HtzjJFiSOuglU.jpg 1.5x, https://s2.loli.net/2022/05/16/I8HtzjJFiSOuglU.jpg 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2022/05/16/I8HtzjJFiSOuglU.jpg"
+        title="img" /></li>
+<li>从结构体当中找到我们需要返回打印的指定字段值，完善优化修改代码即可。</li>
+<li>同理，对<a href="https://translate.volcengine.com/translate" target="_blank" rel="noopener noreffer">火山翻译</a>和<a href="https://ai.youdao.com/product-fanyi-text.s" target="_blank" rel="noopener noreffer">有道智云</a>两个API进行Golang代码生成，其他第三方API也是同样的道理，只不过可能request和response的相关信息不好找或者经过Hash等处理。</li>
+<li>最后实现了三方引擎并行的一个命令行翻译词典，运行结果如下图，<a href="https://github.com/KevinChens/youth-camp/tree/main/lesson1/simpleDict" target="_blank" rel="noopener noreffer">完整源码</a>：<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2022/05/16/kb2U7vhLzSNAjlY.jpg"
+        data-srcset="https://s2.loli.net/2022/05/16/kb2U7vhLzSNAjlY.jpg, https://s2.loli.net/2022/05/16/kb2U7vhLzSNAjlY.jpg 1.5x, https://s2.loli.net/2022/05/16/kb2U7vhLzSNAjlY.jpg 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2022/05/16/kb2U7vhLzSNAjlY.jpg"
+        title="img" /><br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2022/05/16/dzwpgkCqR4oPuac.jpg"
+        data-srcset="https://s2.loli.net/2022/05/16/dzwpgkCqR4oPuac.jpg, https://s2.loli.net/2022/05/16/dzwpgkCqR4oPuac.jpg 1.5x, https://s2.loli.net/2022/05/16/dzwpgkCqR4oPuac.jpg 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2022/05/16/dzwpgkCqR4oPuac.jpg"
+        title="img" /></li>
+</ol>
+<h4 id="proxy">proxy</h4>
+<p>socks5代理协议，是明文传输，它的用途主要是作为一道屏障隔绝内部网络与互联网，并且使两者联系起来。比如某些企业的内网为确保安全性，有严格的防火墙策略，带来的副作用就是访问某些资源很麻烦。socks5相当于在防火墙开了一个口子，让授权的用户，可以通过单个端口去访问内部的所有资源。<br>
+同样地，网络爬虫在爬取过程中，很容易遇到IP访问频率超过限制，为了突破限制，人们就会去网上找代理IP池，这些代理IP池里面的很多协议就是socks5协议。<br>
+socks5代理过程：<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2022/05/16/lZ6FK4GPr5vyAHi.jpg"
+        data-srcset="https://s2.loli.net/2022/05/16/lZ6FK4GPr5vyAHi.jpg, https://s2.loli.net/2022/05/16/lZ6FK4GPr5vyAHi.jpg 1.5x, https://s2.loli.net/2022/05/16/lZ6FK4GPr5vyAHi.jpg 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2022/05/16/lZ6FK4GPr5vyAHi.jpg"
+        title="img" /><br>
+主要分为4个阶段：</p>
+<ol>
+<li>握手阶段：<br>
+浏览器向socks5代理发送请求，包的内容包括了一个协议的版本号，支持的认证种类，socks5服务器会选中一个认证方式，返回给浏览器，如果返回的是00就代表不需要认证，返回其他类型会开始认证流程，对认证流程不再详述；</li>
+<li>认证阶段：<br>
+认证阶段作为协商的一个子流程，它不是必须的。socks5服务器可以决定是否需要认证，如果不需要认证，那么认证阶段会被直接略过。<br>
+如果需要认证，客户端向socks5服务器发起一个认证请求，包括：版本， 用户名长度，对应用户名的字节数据，密码长度，密码对应的数据。<br>
+socks5服务器收到客户端的认证请求后，解析内容，验证信息是否合法，然后给客户端响应结果，包括：版本，状态，如果STATUS字段为0x00表示认证成功，其他的值为认证失败。当客户端收到认证失败的响应后，它将会断开连接。</li>
+<li>请求阶段：<br>
+认证通过以后，浏览器会向socks5服务器发起请求，主要信息包括版本号，请求的类型，主要是connection请求，代表代理服务器要和某个域名或某个IP地址某个端口建立TCP连接，代理服务器收到响应后，会真正和后端服务器建立连接，返回一个响应；</li>
+<li>relay阶段：<br>
+浏览器正常发送请求，代理服务器收到请求，将请求转换到真正的服务器，真的服务器返回响应，也会给代理服务器转发给浏览器，代理服务器不关心流量的细节，可以是HTTP流量，也可以是TCP流量，这就socks5的工作原理。<br>
+需求：启动程序后，通过浏览器配置代理，代理服务器的日志会打印出你访问的网站的域名或者IP，也就是你的网络流量都会经过这个代理服务器。<br>
+分析：</li>
+</ol>
+<ul>
+<li>tcp echo server<br>
+服务端监听你的信息并将其打印。</li>
+<li>auth<br>
+浏览器会给代理服务器发送一个包，包括三个字段version，methods，methods的编码，代理服务器需要返回一个response，包括两个字段version，method。</li>
+<li>request<br>
+读取携带的URL或IP+端口的包，并把它打印。<br>
+请求包，包括6个字段，version，command，RSV，atype，addr，port。</li>
+<li>relay<br>
+用<code>net.dial</code>建立一个TCP连接，并启动两个goroutine，通过<code>io.copy</code>建立浏览器和下游服务器的双向数据转发。<br>
+需要使用<code>context</code>机制，等待<code>ctx.Done()</code>避免<code>connect</code>函数立刻返回，连接关闭。</li>
+<li>通过<code>switchOmega</code>插件，实现网络流量代理，<a href="https://github.com/KevinChens/youth-camp/tree/main/lesson1/proxy" target="_blank" rel="noopener noreffer">完整源码</a>：<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://s2.loli.net/2022/05/16/wSUBIHCJb9aTMDq.jpg"
+        data-srcset="https://s2.loli.net/2022/05/16/wSUBIHCJb9aTMDq.jpg, https://s2.loli.net/2022/05/16/wSUBIHCJb9aTMDq.jpg 1.5x, https://s2.loli.net/2022/05/16/wSUBIHCJb9aTMDq.jpg 2x"
+        data-sizes="auto"
+        alt="https://s2.loli.net/2022/05/16/wSUBIHCJb9aTMDq.jpg"
+        title="img" /></li>
+</ul>
+<h3 id="总结">总结</h3>
+<p>本篇主要对Golang基础的重点易错点，几个常用标准库的使用方法进行了总结记录，并且通过两个小项目对Go语言上手实践，新手丝滑入门Golang。<br>
+第一篇blog，大纲目录比较乱，总是修修改改，后边找个时间整理一下写blog的过程（挖坑）。欢迎大家评论转载，多多发表自己的意见或建议。<br>
+（ps：blog写得真慢，要搞快点！！！）</p>
+<h3 id="引用参考">引用参考</h3>
+<ol>
+<li><a href="https://gobyexample-cn.github.io" target="_blank" rel="noopener noreffer">Go by Example 中文版</a></li>
+<li><a href="https://studygolang.com/pkgdoc" target="_blank" rel="noopener noreffer">Golang标准库文档</a></li>
+</ol>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info"><div class="post-info-tag"><span><a href="/tags/go%E5%9F%BA%E7%A1%80/">go基础</a>
+                </span></div><div class="post-info-line"><div class="post-info-mod">
+                <span>更新于 2022-05-12</span>
+            </div><div class="post-info-mod"></div>
+        </div><div class="post-info-share">
+            <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://kevinchens.github.io/2022/05/go-basic-syntax/" data-title="Golang基础语法" data-hashtags="go基础"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://kevinchens.github.io/2022/05/go-basic-syntax/" data-hashtag="go基础"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Linkedin" data-sharer="linkedin" data-url="https://kevinchens.github.io/2022/05/go-basic-syntax/"><i class="fab fa-linkedin fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Reddit" data-sharer="reddit" data-url="https://kevinchens.github.io/2022/05/go-basic-syntax/"><i class="fab fa-reddit fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="https://kevinchens.github.io/2022/05/go-basic-syntax/" data-title="Golang基础语法"><i class="fab fa-evernote fa-fw"></i></a></span>
+        </div></div><div class="post-nav"></div></div>
+</div><div id="comments" class="single-card"></div></article></div>
+            </main>
+            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.97.3">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.1"><i class="fas fa-hand-holding-heart fa-fw"></i> FeelIt</a>
+        </div>
+    
+        
+        <script async src=" //busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js "></script>
+    
+
+    
+        
+            <section>
+                
+                    <span id="busuanzi_container_value_site_pv"><i class="far fa-eye fa-fw"></i>
+                        
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+
+                
+                    &nbsp;|&nbsp;              
+                
+
+                
+                    <span id="busuanzi_container_value_site_uv"><i class="fa fa-user"></i>
+                        
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+            </section>
+        
+
+        
+        
+    
+<div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="http://kevinchens.github.io/">chens</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        
+    
+    
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/live2d-widget@3.1.4/lib/L2Dwidget.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/live2d-widget@3.1.4/lib/L2Dwidget.0.min.js"></script>
+
+    <script type="text/javascript">
+        L2Dwidget.init({
+            model: {
+                scale: 1,
+                hHeadPos: 0.5,
+                vHeadPos: 0.618,
+                jsonPath: 'https://cdn.jsdelivr.net/npm/live2d-widget-model-hibiki@1.0.5/assets/hibiki.model.json',       
+                
+                
+
+            },
+            display: {
+                superSample: 2,     
+                width: 145,         
+                height: 315,        
+                position: 'left',   
+                hOffset: 0,         
+                vOffset: 0,         
+            },
+            mobile: {
+                show: true,         
+                scale: 0.5,           
+                motion: true,       
+            },
+            react: {
+                opacityDefault: 0.7,  
+                opacityOnHover: 0.8,  
+            },
+            });
+    </script>
+
+
+</div>
+<script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+        .register('/sw.min.js?version=1.0.1', { scope: '/' })
+        .then(() => {
+            console.info('尘市\u00A0Service Worker Registered');
+        }, err => console.error('尘市\u00A0Service Worker registration failed: ', err));
+
+    navigator.serviceWorker
+        .ready
+        .then(() => {
+            console.info('尘市\u00A0Service Worker Ready');
+        });
+}
+</script>
+</footer>
+        </div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-chevron-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment-alt fa-fw"></i>
+            </a></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/copy-tex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.fill%2CArray.prototype.find%2CArray.from%2CIntersectionObserver%2CMath.sign%2CObject.assign%2CPromise%2CObject.entries%2Chtml5shiv%2CObject.values%2Cfetch%2CElement.prototype.after"></script><script src="https://cdn.jsdelivr.net/npm/object-fit-images@3.2.4/dist/ofi.min.js"></script><script src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.0/dist/autocomplete.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script src="https://cdn.jsdelivr.net/npm/typeit@7.0.4/dist/typeit.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js"></script><script src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.1/sharer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/mhchem.min.js"></script><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"chens","id-2":"chens"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script src="/js/theme.min.js"></script></body></html>
