@@ -1,2 +1,0 @@
-# kevinchens.github.io
-myblog
