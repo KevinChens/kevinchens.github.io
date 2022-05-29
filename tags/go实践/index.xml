@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>go实践 - 标签 - 尘市</title>
+        <link>https://kevinchens.github.io/tags/go%E5%AE%9E%E8%B7%B5/</link>
+        <description>go实践 - 标签 - 尘市</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>iamchens@outlook.com (chens)</managingEditor>
+            <webMaster>iamchens@outlook.com (chens)</webMaster><lastBuildDate>Thu, 12 May 2022 15:37:34 &#43;0800</lastBuildDate><atom:link href="https://kevinchens.github.io/tags/go%E5%AE%9E%E8%B7%B5/" rel="self" type="application/rss+xml" /><item>
+    <title>Golang工程实践</title>
+    <link>https://kevinchens.github.io/2022/05/go-practice/</link>
+    <pubDate>Thu, 12 May 2022 15:37:34 &#43;0800</pubDate><author>iamchens@outlook.com (chens)</author><guid>https://kevinchens.github.io/2022/05/go-practice/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://w.wallhaven.cc/full/p8/wallhaven-p87oz3.png" referrerpolicy="no-referrer">
+            </div>Golang工程实践 | 青训笔记 这是我参与「第三届青训营 -后端场」笔记创作活动的的第2篇笔记。 继续通过Go by Example对基础语法进行巩固，]]></description>
+</item>
+</channel>
+</rss>
