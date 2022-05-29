@@ -1,2 +1,2 @@
 # kevinchens.github.io
-myblog
+myblog:kevinchens.github.io
