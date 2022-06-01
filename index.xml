@@ -4,9 +4,17 @@
         <link>https://kevinchens.github.io/</link>
         <description>学习记录分享的个人博客</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>iamchens@outlook.com (chens)</managingEditor>
-            <webMaster>iamchens@outlook.com (chens)</webMaster><lastBuildDate>Thu, 12 May 2022 15:37:34 &#43;0800</lastBuildDate>
+            <webMaster>iamchens@outlook.com (chens)</webMaster><lastBuildDate>Sun, 15 May 2022 15:38:34 &#43;0800</lastBuildDate>
             <atom:link href="https://kevinchens.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Golang高质量编程与性能调优实战</title>
+    <link>https://kevinchens.github.io/2022/05/go-quality-program/</link>
+    <pubDate>Sun, 15 May 2022 15:38:34 &#43;0800</pubDate><author>iamchens@outlook.com (chens)</author><guid>https://kevinchens.github.io/2022/05/go-quality-program/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206011509033.png" referrerpolicy="no-referrer">
+            </div>Golang高质量编程与性能调优实战 | 青训笔记 这是我参与「第三届青训营 -后端场」笔记创作活动的的第3篇笔记。 本篇blog将对前面学习的Go by]]></description>
+</item>
+<item>
     <title>Golang工程实践</title>
     <link>https://kevinchens.github.io/2022/05/go-practice/</link>
     <pubDate>Thu, 12 May 2022 15:37:34 &#43;0800</pubDate><author>iamchens@outlook.com (chens)</author><guid>https://kevinchens.github.io/2022/05/go-practice/</guid>

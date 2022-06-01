@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Golang高质量编程与性能调优实战 - 尘市</title><meta name="description" content="go语言质量编程，写代码，不写bug，elegant..."><meta property="og:title" content="Golang高质量编程与性能调优实战" />
+<meta property="og:description" content="go语言质量编程，写代码，不写bug，elegant..." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://kevinchens.github.io/2022/05/go-quality-program/" /><meta property="og:image" content="https://kevinchens.github.io/chens.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-05-15T15:38:34+08:00" />
+<meta property="article:modified_time" content="2022-05-15T15:38:34+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://kevinchens.github.io/chens.png"/>
+
+<meta name="twitter:title" content="Golang高质量编程与性能调优实战"/>
+<meta name="twitter:description" content="go语言质量编程，写代码，不写bug，elegant..."/>
+<meta name="application-name" content="尘市">
+<meta name="apple-mobile-web-app-title" content="尘市"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://kevinchens.github.io/2022/05/go-quality-program/" /><link rel="prev" href="https://kevinchens.github.io/2022/05/go-practice/" /><link rel="stylesheet" href="/css/page.min.css"><link rel="stylesheet" href="/css/home.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Golang高质量编程与性能调优实战",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/kevinchens.github.io\/2022\/05\/go-quality-program\/"
+        },"image": ["https:\/\/kevinchens.github.io\/images\/Apple-Devices-Preview.webp"],"genre": "posts","keywords": "质量编程","wordcount":  10695 ,
+        "url": "https:\/\/kevinchens.github.io\/2022\/05\/go-quality-program\/","datePublished": "2022-05-15T15:38:34+08:00","dateModified": "2022-05-15T15:38:34+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "chens"
+            },"description": "go语言质量编程，写代码，不写bug，elegant..."
+    }
+    </script></head><body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="尘市"><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="https://github.com/KevinChens/kevinchens.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="尘市"><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="https://github.com/KevinChens/kevinchens.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><div class="menu-item"><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single" data-toc="enable"><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206011509033.png"
+        data-srcset="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206011509033.png, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206011509033.png 1.5x, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206011509033.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206011509033.png"
+        title="go语言质量编程，写代码，不写bug，elegant..." /></div><div class="single-card" data-image="true"><h2 class="single-title animated flipInX">Golang高质量编程与性能调优实战</h2><div class="post-meta">
+                <div class="post-meta-line"><span class="post-author"><a href="http://kevinchens.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>chens</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/golang/"><i class="far fa-folder fa-fw"></i>golang</a></span></div>
+                <div class="post-meta-line"><i class="far fa-calendar-check fa-fw"></i>&nbsp;<time datetime="2022-05-15">2022-05-15</time>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 10695 字</span>&nbsp;
+                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 22 分钟</span>&nbsp;
+    
+
+    
+        
+
+        
+        
+            <span id="busuanzi_container_value_page_pv"><i class="far fa-eye fa-fw"></i>
+                
+                <span id="busuanzi_value_page_pv"></span>&nbsp;次阅读</span>
+        
+    
+</div>
+            </div>
+            
+            <hr><div class="details toc" id="toc-static"  data-kept="">
+                    <div class="details-summary toc-title">
+                        <span>目录</span>
+                        <span><i class="details-icon fas fa-angle-right"></i></span>
+                    </div>
+                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#golang高质量编程与性能调优实战--青训笔记">Golang高质量编程与性能调优实战 | 青训笔记</a>
+      <ul>
+        <li><a href="#go-by-example">Go by Example</a></li>
+        <li><a href="#高质量编程">高质量编程</a>
+          <ul>
+            <li><a href="#编码规范">编码规范</a></li>
+            <li><a href="#性能优化建议">性能优化建议</a></li>
+          </ul>
+        </li>
+        <li><a href="#性能调优实战">性能调优实战</a>
+          <ul>
+            <li><a href="#pprof实战">pprof实战</a></li>
+            <li><a href="#采样过程和原理">采样过程和原理</a></li>
+            <li><a href="#案例">案例</a></li>
+          </ul>
+        </li>
+        <li><a href="#总结">总结</a></li>
+        <li><a href="#引用参考">引用参考</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </div><div class="content" id="content"><h2 id="golang高质量编程与性能调优实战--青训笔记">Golang高质量编程与性能调优实战 | 青训笔记</h2>
+<p>这是我参与「第三届青训营 -后端场」笔记创作活动的的第3篇笔记。</p>
+<p>本篇blog将对前面学习的Go by Example最后一部分进行归纳总结，主要内容有函数自定义排序、文件读写以及命令行相关参数等等。同时对如何进行高质量编程，Go程序优化手段和pprof性能分析工具的使用进行学习总结。完整代码见<a href="https://github.com/KevinChens/youth-camp/tree/main/lesson3" target="_blank" rel="noopener noreffer">Github</a>。</p>
+<h3 id="go-by-example">Go by Example</h3>
+<ol>
+<li><code>sort</code>包实现了内建及用户自定义数据类型的排序功能。它是原地排序，不返回一个新切片。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="nx">strs</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="s">&#34;c&#34;</span><span class="p">,</span> <span class="s">&#34;a&#34;</span><span class="p">,</span> <span class="s">&#34;b&#34;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nx">sort</span><span class="p">.</span><span class="nf">Strings</span><span class="p">(</span><span class="nx">strs</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">ints</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">int</span><span class="p">{</span><span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nx">sort</span><span class="p">.</span><span class="nf">Ints</span><span class="p">(</span><span class="nx">ints</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>通过实现<code>sort.Interface</code>接口的<code>Len、Less、Swap</code>方法， 就可以使用sort包的通用Sort方法，实现自定义函数排序。实现一个按字符串长度排序的例子：</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">byLength</span> <span class="p">[]</span><span class="kt">string</span>
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="nx">byLength</span><span class="p">)</span> <span class="nf">Len</span><span class="p">()</span> <span class="kt">int</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="nx">byLength</span><span class="p">)</span> <span class="nf">Swap</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">j</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">s</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="nx">s</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="p">=</span> <span class="nx">s</span><span class="p">[</span><span class="nx">j</span><span class="p">],</span> <span class="nx">s</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="nx">byLength</span><span class="p">)</span> <span class="nf">Less</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">j</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="nx">s</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">s</span><span class="p">[</span><span class="nx">j</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fruits</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="s">&#34;peach&#34;</span><span class="p">,</span> <span class="s">&#34;banana&#34;</span><span class="p">,</span> <span class="s">&#34;kiwi&#34;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">sort</span><span class="p">.</span><span class="nf">Sort</span><span class="p">(</span><span class="nf">byLength</span><span class="p">(</span><span class="nx">fruits</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">fruits</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// output:[kiwi peach banana]
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li>我们用<code>panic</code>来表示程序正常运行中不应该出现的错误， 或者我们不准备优雅处理的错误。当函数返回我们不知道如何处理（或不想处理）的错误值时，中止操作，这是panic常用的方法。</li>
+<li>defer一般是执行清理工作，比如关闭文件等，并且在错误检查之后，因为它代表对象已经存在，才会进行清理工作，否则会出现空指针错误。</li>
+<li><code>recover</code>可以阻止panic中止程序，并让它继续执行，recover的返回值是在调用panic时抛出的错误。</li>
+<li><code>os.Open</code>只读文件，<code>os.OpenFile</code>可以指定是否可读可写。</li>
+<li><code>os.Args</code>提供原始命令行参数访问功能。</li>
+</ol>
+<h3 id="高质量编程">高质量编程</h3>
+<p>高质量的代码有4个特性：</p>
+<ul>
+<li>正确性，完备考虑各种边界条件；</li>
+<li>可靠性，处理各种异常、错误，保证服务的稳定；</li>
+<li>易维护，逻辑简单，后续调整或添加功能能够快速支持；</li>
+<li>易阅读，代码能够被他人清晰阅读，容易理解。</li>
+</ul>
+<p>高质量编程3个通用原则：</p>
+<ul>
+<li>简单，没有多余的复杂性，能够以清晰的逻辑编写代码；<br>
+复杂的程序逻辑，不易重构和优化，遇到问题也难以排查。</li>
+<li>可读，代码是给人阅读的，可读才可维护；</li>
+<li>生产力，编程更多是团队合作，团队整体的工作效率是十分重要的。<br>
+Go通过<code>go fmt</code>统一代码格式，降低新成员上手项目代码的成本。</li>
+</ul>
+<h4 id="编码规范">编码规范</h4>
+<p><strong>代码格式：</strong> 使用<code>go fmt</code>自动格式化代码；<br>
+<strong>注释：</strong></p>
+<ul>
+<li>解释代码作用。代码实现的原因是什么，代码是如何实现的，代码什么情况会出错；</li>
+<li>对于公共符号始终要注释。比如公共的变量、常量、函数以及结构等；</li>
+<li>代码是最好的注释，注释应该提供代码来表达出的上下文信息。</li>
+</ul>
+<p><strong>命名规范：</strong></p>
+<ul>
+<li>变量名要简洁，缩略词全大写，比如<code>ServeHTTP</code>;</li>
+<li>变量距离被使用的地方越远，越需要携带更多的上下文信息，使其含义易读。</li>
+</ul>
+<p>下边举几个例子，感受一下变量命名的好坏。<br>
+i和index的作用域仅限于for循环，index的额外冗余并没有增加对于程序的理解。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// Bad
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">for</span> <span class="nx">index</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">index</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span> <span class="nx">index</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// do something
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// Good
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// do something
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>deadline有特殊含义，替换成t降低了变量名的信息量。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// Good
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Client</span><span class="p">)</span> <span class="nf">send</span><span class="p">(</span><span class="nx">req</span> <span class="o">*</span><span class="nx">Request</span><span class="p">,</span> <span class="nx">deadline</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Time</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// Bad
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Client</span><span class="p">)</span> <span class="nf">send</span><span class="p">(</span><span class="nx">req</span> <span class="o">*</span><span class="nx">Request</span><span class="p">,</span> <span class="nx">t</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Time</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>函数名不携带包名的上下文，因为包名和函数名总是成对出现；</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// http包中函数
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Good
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">Serve</span><span class="p">(</span><span class="nx">l</span> <span class="nx">net</span><span class="p">.</span><span class="nx">Listener</span><span class="p">,</span> <span class="nx">handler</span> <span class="nx">Handler</span><span class="p">)</span> <span class="kt">error</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// Bad
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">ServeHTTP</span><span class="p">(</span><span class="nx">l</span> <span class="nx">net</span><span class="p">.</span><span class="nx">Listener</span><span class="p">,</span> <span class="nx">handler</span> <span class="nx">Handler</span><span class="p">)</span> <span class="kt">error</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>package名只由小写字母组成；</li>
+<li>简短并包含一定的上下文信息，比如schema、task等；</li>
+<li>不要与标准库同名，比如不要使用sync、strings等；</li>
+<li>不要使用常用变量名作为包名，比如使用bufio而不是buf；</li>
+<li>包名使用单数，比如使用encoding而不是encodings；</li>
+<li>谨慎使用缩写，在不破坏上下文的情况下fmt比format更简短。</li>
+</ul>
+<p><strong>控制流程：</strong></p>
+<ul>
+<li>避免嵌套，保持正常流程清晰；</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// Bad
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">if</span> <span class="nx">foo</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">x</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// Good
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">if</span> <span class="nx">foo</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">x</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">return</span> <span class="kc">nil</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>尽量保持正常代码路径为最小缩进，遵守线性原理；
+也就是优先处理错误情况/特殊情况，尽早返回或继续循环来减少嵌套。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// Bad
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">OneFunc</span><span class="p">()</span> <span class="kt">error</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">err</span> <span class="o">:=</span> <span class="nf">doSomething</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="nx">err</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">err</span> <span class="o">:=</span> <span class="nf">doAnotherThing</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nx">err</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="kc">nil</span> <span class="c1">// normal case
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">err</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">err</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// Good
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">OneFunc</span><span class="p">()</span> <span class="kt">error</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nf">doSomething</span><span class="p">();</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">err</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nf">doAnotherThing</span><span class="p">();</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">err</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="kc">nil</span> <span class="c1">// normal case
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>错误和异常处理：</strong></p>
+<ul>
+<li>简单错误是指仅出现一次的错误，在其他地方不需要捕获该错误；
+优先使用<code>errors.New</code>来创建匿名变量直接表示简单错误；<br>
+如果有格式化的需求，使用<code>fmt.Errorf</code>。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">defaultCheckRedirect</span><span class="p">(</span><span class="nx">req</span> <span class="o">*</span><span class="nx">Request</span><span class="p">,</span> <span class="nx">via</span> <span class="p">[]</span><span class="o">*</span><span class="nx">Request</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">via</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">10</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="s">&#34;stopped after 10 redirects&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>错误的Wrap提供了一个error嵌套另一个error，生成了一个error跟踪链；
+在<code>fmt.Errorf</code>中使用<code>%w</code>将一个错误关联至错误链中。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="nx">list</span><span class="p">,</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nf">GetBytes</span><span class="p">(</span><span class="nx">cache</span><span class="p">.</span><span class="nf">Subkey</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">actionID</span><span class="p">,</span> <span class="s">&#34;srcfiles&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;reading srcfiles list:%w&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>使用<code>errors.Is</code>判定一个错误是否为特定错误；
+不同于<code>==</code>，使用该方法可以判定错误链上的所有错误是否含有特定的错误。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="nx">data</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">lockedfile</span><span class="p">.</span><span class="nf">Read</span><span class="p">(</span><span class="nx">targ</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">Is</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">ErrNotExist</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">{},</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">return</span> <span class="nx">data</span><span class="p">,</span> <span class="nx">err</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>在错误链上获取特定种类的错误，使用<code>errors.As</code>；
+它和Is的区别在于，会提取出调用链中指定类型的错误，并将错误赋值给定义好的变量，以便后续处理，下例是将问题的patch打印出来：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="k">if</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="s">&#34;non-existing&#34;</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kd">var</span> <span class="nx">pathError</span> <span class="o">*</span><span class="nx">fs</span><span class="p">.</span><span class="nx">PathError</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">As</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">pathError</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Failed at path:&#34;</span><span class="p">,</span> <span class="nx">pathError</span><span class="p">.</span><span class="nx">Path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>当程序启动阶段发生不可逆转的错误时，可以在init或main使用panic，其他业务代码不建议使用；</li>
+<li>recover只能在被defer的函数中使用，嵌套无法生效，只在当前goroutine生效；</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="o">*</span><span class="nx">ss</span><span class="p">)</span> <span class="nf">Token</span><span class="p">(</span><span class="nx">skipSpace</span> <span class="kt">bool</span><span class="p">,</span> <span class="nx">f</span> <span class="kd">func</span><span class="p">(</span><span class="kt">rune</span><span class="p">)</span> <span class="kt">bool</span><span class="p">)</span> <span class="p">(</span><span class="nx">tok</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// defer LIFO
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">defer</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nx">e</span> <span class="o">:=</span> <span class="nb">recover</span><span class="p">();</span> <span class="nx">e</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="nx">se</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">e</span><span class="p">.(</span><span class="nx">scanError</span><span class="p">);</span> <span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">err</span> <span class="p">=</span> <span class="nx">se</span><span class="p">.</span><span class="nx">err</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">panic</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}()</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// do something
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="性能优化建议">性能优化建议</h4>
+<p>性能优化的前提是满足程序的正确可靠，简洁清晰。性能优化是综合评估，时间效率和空间效率常常是对立的两方，对Go语言特性，总结其性能优化建议。<br>
+<strong>Benchmark：</strong><br>
+使用Go自带的性能评估工具，以实际数据评价代码性能，示例：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// fib.go
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">Fib</span><span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="nx">n</span> <span class="p">&lt;</span> <span class="mi">2</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">n</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nf">Fib</span><span class="p">(</span><span class="nx">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="nf">Fib</span><span class="p">(</span><span class="nx">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// fib_test.go
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">BenchmarkFib10</span><span class="p">(</span><span class="nx">b</span> <span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">B</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="nx">n</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">n</span> <span class="p">&lt;</span> <span class="nx">b</span><span class="p">.</span><span class="nx">N</span><span class="p">;</span> <span class="nx">n</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">Fib</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>命令：<code>go test -bench=. -benchmem</code><br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205311436582.png"
+        data-srcset="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205311436582.png, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205311436582.png 1.5x, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205311436582.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205311436582.png"
+        title="img" /><br>
+<code>BenchmarkFib10-8</code>：测试函数名-8，8是GOMAXPROCS的值，默认为CPU核数；<br>
+<code>4473883</code>：b.N的值，表示一共执行这么多次；<br>
+<code>247.4 ns/op</code>：表示每次执行花费的时间；<br>
+<code>0 B/op</code>：表示每次执行申请多大的内存；<br>
+<code>0 allocs/op</code>：表示每次执行申请几次内存。</p>
+<p><strong>Slice：</strong></p>
+<ul>
+<li>预分配：<br>
+在使用make初始化slice时预分配内存，提供容量信息，示例对比：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">NoPreAlloc</span><span class="p">(</span><span class="nx">size</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">data</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">int</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="nx">k</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">k</span> <span class="p">&lt;</span> <span class="nx">size</span><span class="p">;</span> <span class="nx">k</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">data</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">k</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">PreAlloc</span><span class="p">(</span><span class="nx">size</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">data</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">int</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">size</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="nx">k</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">k</span> <span class="p">&lt;</span> <span class="nx">size</span><span class="p">;</span> <span class="nx">k</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">data</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">k</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>命令：<code>go test -bench=. -benchmem</code><br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205311500324.png"
+        data-srcset="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205311500324.png, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205311500324.png 1.5x, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205311500324.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205311500324.png"
+        title="img" /><br>
+slice预分配内存不仅节约了时间，内存申请次数也只有一次。<br>
+出现这种现象的原因是，slice是数组片段的描述，包括：数组指针，数组长度，数组容量；切片操作并不复制切片指向的元素，创建一个新切片会复用原来切片的底层数组。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">slice</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">array</span> <span class="nx">unsafe</span><span class="p">.</span><span class="nx">Pointer</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">len</span> <span class="kt">int</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">cap</span> <span class="kt">int</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>append</code>有两种情况：</p>
+<ol>
+<li>append之后，slice长度小于等于cap，直接利用原底层数组剩余空间；</li>
+<li>append之后，slice长度大于cap，会分配一块更大的区域容纳新的底层数组。</li>
+</ol>
+<p>为了避免发生内存拷贝，如果知道最终slice大小，预分配cap能够减少内存分配，获得更好的性能。</p>
+<ul>
+<li>大内存未释放：<br>
+如果原slice是由大量元素组成，我们在此基础再切片，只使用了一小部分，但底层数组仍然在内存中占用大量空间，得不到释放。可以使用copy代替re-slice，示例如下，完整代码见<a href="https://github.com/KevinChens/youth-camp/tree/main/lesson3/copydemo" target="_blank" rel="noopener noreffer">Github</a>：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">GetLastBySlice</span><span class="p">(</span><span class="nx">origin</span> <span class="p">[]</span><span class="kt">int</span><span class="p">)</span> <span class="p">[]</span><span class="kt">int</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">origin</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="nx">origin</span><span class="p">)</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">GetLastByCopy</span><span class="p">(</span><span class="nx">origin</span> <span class="p">[]</span><span class="kt">int</span><span class="p">)</span> <span class="p">[]</span><span class="kt">int</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">result</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">int</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">copy</span><span class="p">(</span><span class="nx">result</span><span class="p">,</span> <span class="nx">origin</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="nx">origin</span><span class="o">-</span><span class="mi">2</span><span class="p">):])</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">result</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>命令：<code>go test -run=. -v</code><br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205311550828.png"
+        data-srcset="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205311550828.png, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205311550828.png 1.5x, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205311550828.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205311550828.png"
+        title="img" /></p>
+<p><strong>Map：</strong><br>
+同样的map也应该预分配内存，向map添加元素的操作会触发map的扩容机制，提前分配空间可以减少内存拷贝和Rehash的消耗。</p>
+<p><strong>String：</strong><br>
+字符串的拼接方式有<code>+</code>、<code>strings.Builder</code>和<code>bytes.Buffer</code>，三者性能表现如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">Plus</span><span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">str</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">s</span> <span class="o">:=</span> <span class="s">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">s</span> <span class="o">+=</span> <span class="nx">str</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">s</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">StrBuilder</span><span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">str</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kd">var</span> <span class="nx">builder</span> <span class="nx">strings</span><span class="p">.</span><span class="nx">Builder</span>
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">builder</span><span class="p">.</span><span class="nf">WriteString</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">builder</span><span class="p">.</span><span class="nf">String</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">ByteBuffer</span><span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">str</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">buf</span> <span class="o">:=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">bytes</span><span class="p">.</span><span class="nx">Buffer</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">buf</span><span class="p">.</span><span class="nf">WriteString</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">buf</span><span class="p">.</span><span class="nf">String</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// n=10000, str=&#34;hello&#34;
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>命令：<code>go test -bench=. -benchmem</code><br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205311619238.png"
+        data-srcset="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205311619238.png, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205311619238.png 1.5x, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205311619238.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205311619238.png"
+        title="img" /><br>
+分析：</p>
+<ul>
+<li>使用<code>+</code>拼接性能最差，后两者性能接近，但<code>strings.Buffer</code>更快。</li>
+<li>字符串在Golang中是不可变类型，占用内存大小是固定的；</li>
+<li><code>+</code>拼接是不断开辟一个新空间，每次操作都会重新分配内存；</li>
+<li><code>strings.Builder</code>和<code>bytes.Buffer</code>底层都是<code>[]byte</code>数组；</li>
+<li>内存扩容策略，不需要每次拼接重新分配内存。</li>
+</ul>
+<p>为什么<code>strings.Builder</code>比<code>bytes.Buffer</code>更快：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">b</span> <span class="o">*</span><span class="nx">Buffer</span><span class="p">)</span> <span class="nf">String</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="nx">b</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="s">&#34;&lt;nil&gt;&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nb">string</span><span class="p">(</span><span class="nx">b</span><span class="p">.</span><span class="nx">buf</span><span class="p">[</span><span class="nx">b</span><span class="p">.</span><span class="nx">off</span><span class="p">:])</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">b</span> <span class="o">*</span><span class="nx">Builder</span><span class="p">)</span> <span class="nf">String</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="o">*</span><span class="p">(</span><span class="o">*</span><span class="kt">string</span><span class="p">)(</span><span class="nx">unsafe</span><span class="p">.</span><span class="nf">Pointer</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">b</span><span class="p">.</span><span class="nx">buf</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>bytes.Buffer</code>转化为字符串会重新申请一块空间，<code>strings.Builder</code>直接将底层<code>[]byte</code>转换成字符串类型返回，因此更快。<br>
+如果想要更高效的字符串构造方法，可以使用预分配+<code>strings.Builder</code>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">PreStrBuilder</span><span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">str</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kd">var</span> <span class="nx">builder</span> <span class="nx">strings</span><span class="p">.</span><span class="nx">Builder</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">builder</span><span class="p">.</span><span class="nf">Grow</span><span class="p">(</span><span class="nx">n</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="nx">str</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">builder</span><span class="p">.</span><span class="nf">WriteString</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">builder</span><span class="p">.</span><span class="nf">String</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">PreByteBuffer</span><span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">str</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">buf</span> <span class="o">:=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">bytes</span><span class="p">.</span><span class="nx">Buffer</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">buf</span><span class="p">.</span><span class="nf">Grow</span><span class="p">(</span><span class="nx">n</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="nx">str</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">buf</span><span class="p">.</span><span class="nf">WriteString</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">buf</span><span class="p">.</span><span class="nf">String</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>命令：<code>go test -bench=. -benchmen</code><br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205311648839.png"
+        data-srcset="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205311648839.png, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205311648839.png 1.5x, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205311648839.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205311648839.png"
+        title="img" /><br>
+<code>strings.Builder</code>只有一次内存分配，<code>bytes.Buffer</code>有两次内存分配。</p>
+<p><strong>空结构体：</strong><br>
+空结构体<code>struct{}</code>实例不占据内存空间，可为占位符。</p>
+<p><strong>atomic包：</strong><br>
+在遇到多线程场景时，比如实现一个多线程共用计数器，如何保证计数准确性，线程安全。<br>
+可以使用atomic包的原子操作，也可以使用互斥锁，示例如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">atomicCounter</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">i</span> <span class="kt">int32</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">AtomicAddOne</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">atomicCounter</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">atomic</span><span class="p">.</span><span class="nf">AddInt32</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">c</span><span class="p">.</span><span class="nx">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">mutexCounter</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">i</span> <span class="kt">int32</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">m</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">Mutex</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">MutexAddOne</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">mutexCounter</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"> <span class="nx">c</span><span class="p">.</span><span class="nx">m</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"> <span class="nx">c</span><span class="p">.</span><span class="nx">i</span><span class="o">++</span>
+</span></span><span class="line"><span class="cl"> <span class="nx">c</span><span class="p">.</span><span class="nx">m</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>命令：<code>go test -bench=. -benchmen</code><br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205311716942.png"
+        data-srcset="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205311716942.png, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205311716942.png 1.5x, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205311716942.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205311716942.png"
+        title="img" /><br>
+锁的实现是通过操作系统来实现的，是系统调用；atomic操作是通过硬件实现，效率比锁高；<br>
+<code>sync.Mutex</code>一般用来保护一段逻辑，不仅仅是保护一个变量；<br>
+对于非数值操作，可以使用<code>atomic.Value</code>，能承载一个<code>interface{}</code>。</p>
+<h3 id="性能调优实战">性能调优实战</h3>
+<p>性能调优原则：</p>
+<ul>
+<li>依靠数据而不是猜测；</li>
+<li>定位最大瓶颈而不是细枝末节；</li>
+<li>不要过早优化；</li>
+<li>不要过度优化。</li>
+</ul>
+<h4 id="pprof实战">pprof实战</h4>
+<p>pprof是用于可视化和分析性能，分析数据的工具，能够告知程序在什么地方耗费了多少CPU，多少内存等实际的数据指标。<br>
+<strong>pprof功能</strong><br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312151752.png"
+        data-srcset="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312151752.png, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312151752.png 1.5x, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312151752.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312151752.png"
+        title="img" /><br>
+pprof可以采样程序运行时的CPU、堆内存、goroutine、锁竞争、阻塞调用和系统线程等的使用数据，同时通过列表、调用图、火焰图、源码以及反汇编等视图展示采集到的性能指标。</p>
+<p><strong>pprof排查</strong></p>
+<ol>
+<li>搭建项目，git clone<a href="https://github.com/wolfogre/go-pprof-practice" target="_blank" rel="noopener noreffer">源码</a>，项目提前埋入炸弹代码，能够产生可观测的性能问题。会占用1CPU核心和超过1GB的内存。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="o">...</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">runtime</span><span class="p">.</span><span class="nf">GOMAXPROCS</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>              <span class="c1">// 限制CPU使用数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="nx">runtime</span><span class="p">.</span><span class="nf">SetMutexProfileFraction</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1">// 开启锁调用跟踪
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="nx">runtime</span><span class="p">.</span><span class="nf">SetBlockProfileRate</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>     <span class="c1">// 开启阻塞调用跟踪
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 启动http server
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">http</span><span class="p">.</span><span class="nf">ListenAndServe</span><span class="p">(</span><span class="s">&#34;:6060&#34;</span><span class="p">,</span> <span class="kc">nil</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">os</span><span class="p">.</span><span class="nf">Exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}()</span>
+</span></span><span class="line"><span class="cl">  <span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>main.go</code>初始化http服务和pprof接口，<code>import _ &quot;net/http/pprof&quot;</code>，它会注册pprof的handler到http server。<br>
+2. 浏览器查看指标，我们可以在浏览器打开<code>http://127.0.01:6060/debug/pprof</code>查看基本的性能统计。<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312217729.png"
+        data-srcset="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312217729.png, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312217729.png 1.5x, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312217729.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312217729.png"
+        title="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312217729.png" /><br>
+<code>allocs:</code> 内存分配情况；<br>
+<code>blocks:</code> 阻塞操作情况；<br>
+<code>cmdline:</code> 当前程序命令行调用情况；<br>
+<code>goroutine:</code> 当前所有goroutine的堆栈信息；<br>
+<code>heap:</code> 堆上内存使用情况（同allocs）；<br>
+<code>mutex:</code> 锁竞争操作情况；<br>
+<code>profile:</code> CPU占用情况；<br>
+<code>threadcreate:</code> 当前所有创建的系统线程的堆栈信息；<br>
+<code>trace:</code> 程序运行跟踪信息。</p>
+<p>浏览器数据可读性比较差，可借助pprof阅读这些数据指标。<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312226921.png"
+        data-srcset="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312226921.png, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312226921.png 1.5x, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312226921.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312226921.png"
+        title="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312226921.png" /><br>
+3. CPU问题排查；<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312229843.png"
+        data-srcset="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312229843.png, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312229843.png 1.5x, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312229843.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312229843.png"
+        title="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312229843.png" /><br>
+明显CPU占用异常，pprof的采样结果是将一段时间内的信息汇总输出到文件中，因此要拿到这个profile文件，可使用pprof工具连接接口下载需要的数据。我们使用<code>go tool pprof</code>+采样链接启动采样。<br>
+<code>go tool pprof &quot;http://127.0.0.1:6060/debug/pprof/profile?seconds=10&quot;</code>，profile代表采样对象是CPU使用情况，如果在浏览器打开该链接，会启动一个60s的采样，并在结束后下载文件，我们这里加上seconds=10，让其采样10s。<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312248005.png"
+        data-srcset="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312248005.png, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312248005.png 1.5x, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312248005.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312248005.png"
+        title="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312248005.png" /><br>
+输入<code>top</code>可以查看CPU占用最高的函数：<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312303347.png"
+        data-srcset="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312303347.png, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312303347.png 1.5x, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312303347.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312303347.png"
+        title="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312303347.png" /><br>
+<code>flat</code> 表示当前函数本身的执行耗时；<br>
+<code>flat%</code> 表示flat占CPU总量的比例；<br>
+<code>sum%</code> 表示上面所有行的flat%总和；<br>
+<code>cum</code> 表示当前函数加上其调用函数的总占用；<br>
+<code>cum%</code> cum占总量的比例。<br>
+表格前面描述了采样的总体信息，默认展示占用资源最高的10个函数，如果需要看最高的N个，输入topN，比如top3查看前3个占用最高的调用。<br>
+可以看出表格第一行是问题所在，这个函数本身执行耗时flat，调用函数总耗时cum都3s左右，但flat%和cum%占用都超过90%。<br>
+从表中还能看到一些其他情况，比如flat和cum相等，或者有时为0。</p>
+<ul>
+<li>什么情况下，falt==cum？函数中没有对其他函数的调用。</li>
+<li>什么情况下，flat==0？函数中只有其他函数的调用。</li>
+</ul>
+<p>输入<code>list Eat</code>查找这个函数，list会根据给定的正则表达式查找代码，并按行展示出每一行的占用。<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312313422.png"
+        data-srcset="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312313422.png, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312313422.png 1.5x, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312313422.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312313422.png"
+        title="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312313422.png" /><br>
+可以看见这条3.15s的占用是问题所在，定位成功。<br>
+输入<code>web</code>，生成一张调用关系图，调用关系可视化。可能需要安装graphviz组件，通过命令<code>brew install graphviz</code>安装即可。其中方框最红最大的就是占用CPU最多的函数。CPU炸弹定位完成，输入<code>q</code>退出终端。<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312330530.png"
+        data-srcset="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312330530.png, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312330530.png 1.5x, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312330530.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312330530.png"
+        title="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312330530.png" /><br>
+为了后续的展示，将问题代码注释，拆除这个炸弹，重新运行程序。<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312341785.png"
+        data-srcset="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312341785.png, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312341785.png 1.5x, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312341785.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312341785.png"
+        title="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312341785.png" /><br>
+明显CPU占用已经降下来，但内存占用问题还存在。</p>
+<ol start="4">
+<li>Heap堆内存问题排查；<br>
+这里我们通过<code>-http=:8080</code>开启pprof自带的Web UI，使用命令<code>go tool pprof -http=:8080 &quot;http://127.0.0.1:6060/debug/pprof/heap&quot;</code>完成对heap的采样。<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312351779.png"
+        data-srcset="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312351779.png, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312351779.png 1.5x, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312351779.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312351779.png"
+        title="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312351779.png" /><br>
+明显看出，Steal函数是问题所在，占用了1.2GB内存。通过view菜单可以看不同视图比如top视图，source视图，可搜索Steal进行函数定位：<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312355351.png"
+        data-srcset="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312355351.png, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312355351.png 1.5x, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312355351.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312355351.png"
+        title="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312355351.png" /><br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312356711.png"
+        data-srcset="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312356711.png, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312356711.png 1.5x, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312356711.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312356711.png"
+        title="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202205312356711.png" /><br>
+问题函数已定位，将其注释，发现内存正常，至此两个炸弹已拆除。<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010001899.png"
+        data-srcset="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010001899.png, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010001899.png 1.5x, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010001899.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010001899.png"
+        title="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010001899.png" /><br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010013343.png"
+        data-srcset="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010013343.png, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010013343.png 1.5x, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010013343.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010013343.png"
+        title="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010013343.png" /><br>
+采样也没有异常节点，但内存问题就全部排除了吗？注意右上角<code>unknow_inuse_space</code>，打开sample菜单，发现堆内存有4个指标：</li>
+</ol>
+<ul>
+<li>alloc_objects: 程序累计申请的对象数；</li>
+<li>alloc_space: 程序累计的内存大小；</li>
+<li>inuse_objects: 程序当前持有的对象数；</li>
+<li>inuse_space: 程序当前占用的内存大小。</li>
+</ul>
+<p>默认展示<code>inuse_space</code>，只展示当前持有的内存，但如果有的内存已经释放，inuse采样就不会展示了，切换到<code>alloc_space</code>指标，继续<code>alloc</code>内存问题分析（左：Source视图Run函数；右：Top视图）：<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010017480.png"
+        data-srcset="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010017480.png, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010017480.png 1.5x, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010017480.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010017480.png"
+        title="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010017480.png" /><br>
+明显Run函数是问题所在，它每次申请16MB大小内存，累计申请超过2.69GB，注释问题代码，继续后续排查，至此内存炸弹已经全部拆除。</p>
+<ol start="5">
+<li>
+<p>goroutine泄漏，导致内存泄漏；<br>
+执行命令<code>go tool pprof -http=:8080 &quot;http://127.0.0.1:6060/debug/pprof/goroutine&quot;</code>，可以看见一张很长的调用关系图，节点过多，难以阅读，可以打开view菜单，通过Flame Graph 火焰图阅读。<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010035686.png"
+        data-srcset="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010035686.png, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010035686.png 1.5x, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010035686.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010035686.png"
+        title="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010035686.png" /><br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010041323.png"
+        data-srcset="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010041323.png, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010041323.png 1.5x, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010041323.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010041323.png"
+        title="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010041323.png" /><br>
+由上到下表示调用顺序，每一块代表一个函数，越长代表占用CPU的时间更长，火焰图是动态的，支持点击块进行分析，可以看见Drink函数调用创建了超过95%的goroutine。<br>
+在source视图可见问题函数，每次执行10条无意义的goroutine，每条等待30s后退出，导致goroutine泄漏。<br>
+设想一下，如果发起的goroutine没有退出，同时不断有goroutine被启动，对应的内存占用持续增长，CPU调度压力不断增大，最终进程会被系统kill。注释问题代码，goroutine泄漏问题解决。</p>
+</li>
+<li>
+<p>mutex，锁竞争；<br>
+执行命令<code>go tool pprof -http=:8080 &quot;http://127.0.0.1:6060/debug/pprof/mutex&quot;</code>，在Graph视图能够定位到问题函数Howl，在Source视图能够看见是哪一行代码发生了锁竞争。在这个函数中，goroutine等待了1s才解锁，阻塞了，注释即可。<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010721971.png"
+        data-srcset="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010721971.png, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010721971.png 1.5x, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010721971.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010721971.png"
+        title="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010721971.png" /></p>
+</li>
+<li>
+<p>block阻塞；<br>
+执行命令<code>go tool pprof -http=:8080 &quot;http://127.0.0.1:6060/debug/pprof/block&quot;</code>，除了锁竞争会导致阻塞，其他逻辑，比如读取一个channel也会导致阻塞，在页面中可以看到阻塞操作还有两个。<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010738053.png"
+        data-srcset="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010738053.png, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010738053.png 1.5x, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010738053.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010738053.png"
+        title="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010738053.png" /><br>
+从Graph视图到Source视图，看到Pee函数读取了一个<code>time.After()</code>生成的channel，导致了这个goroutine阻塞了1s而不是等待了1s，注释代码解决阻塞。<br>
+通过上述操作只定位到了1个block，终端输入<code>go tool pprof &quot;http://127.0.0.1:6060/debug/pprof/block&quot;</code>和<code>top</code>可以看见另外一个阻塞操作的节点。有3个节点因为<code>cumulative</code>小于4.24s被drop，它的总用时小于总时长的千分之五，所以被省略了，没有展示。这样的过滤策略能够更加有效地突出问题所在，省略相对没有问题的信息，便于问题定位，解决主要瓶颈问题。<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010758578.png"
+        data-srcset="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010758578.png, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010758578.png 1.5x, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010758578.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010758578.png"
+        title="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010758578.png" /><br>
+那如何查看另外一个阻塞操作呢？可以通过暴露的接口地址直接访问，打开block，发现第二个阻塞操作发生在<code>http handler</code>。<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010751875.png"
+        data-srcset="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010751875.png, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010751875.png 1.5x, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010751875.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010751875.png"
+        title="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010751875.png" /><br>
+至此代码中所有炸弹已经找出并解决，我们完成了以下实践操作：</p>
+</li>
+</ol>
+<ul>
+<li>5种使用pprof采集的常用性能指标：CPU、堆内存、Goroutine、锁竞争和阻塞；</li>
+<li>2种展示方式：交互式终端和Web UI；</li>
+<li>4种视图：Top、Graph、Source和Flame Graph。</li>
+</ul>
+<h4 id="采样过程和原理">采样过程和原理</h4>
+<p>知其然，知其所以然，看看pprof内部实现是怎样的。<br>
+首先是<strong>CPU</strong>，有3个主要采样指标：</p>
+<ul>
+<li>采样对象：所有调用栈和它们的占用时间；</li>
+<li>采样率：100次/秒，固定值；
+进程每秒暂停100次，记录当前的调用栈信息，汇总后，根据调用栈在采样中出现次数推断函数的运行时间；</li>
+<li>采样时间：从手动启动到手动结束。<br>
+这个100次/秒的定时暂停机制在unix或类unix系统上是通过依赖信号机制实现的。每次暂停都会接收到一个信号，通过系统计时器来保证这个信号固定频率发送。<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010815570.png"
+        data-srcset="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010815570.png, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010815570.png 1.5x, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010815570.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010815570.png"
+        title="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010815570.png" /><br>
+采样具体流程：<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010901466.png"
+        data-srcset="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010901466.png, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010901466.png 1.5x, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010901466.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010901466.png"
+        title="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010901466.png" /><br>
+一共3个对象：</li>
+<li>操作系统：每10ms向进程发送一次SIGPROF信号；</li>
+<li>进程：每次接受到SIGPROF会记录调用堆栈；</li>
+<li>写缓冲：每100ms读取已经记录的调用栈并写入输出流。</li>
+</ul>
+<p>第二个是<strong>堆内存</strong>，由于pprof的局限性，采样的是堆内存而不是内存，内存采样在实现上依赖内存分配器的记录，所以只能记录在堆上分配，会参与GC的内存，一些其他的内存分配，比如调用结束就会回收的栈内存，更底层使用的cgo调用分配的内存等，这些是不会被内存采样记录的。其采样过程和各个指标如下：</p>
+<ul>
+<li>采样程序通过内存分配器在堆上分配和释放内存，记录分配/释放的大小和数量；</li>
+<li>采样率是每分配51KB记录一次，可以在运行开头修改，设为1则每次分配都会记录；</li>
+<li>采样时间是从程序运行开始就一直采样；
+和CPU、Goroutine不同，内存的采样是一个持续过程，会记录从程序运行开始所有分配或释放的内存大小和对象数量，并在采样时遍历这些结果并进行汇总。</li>
+<li>采样指标有<code>alloc_space,alloc_objects,inuse_space,inuse_objects</code>；</li>
+<li>inuse=alloc-free；
+alloc是指从程序运行开始的累计指标，inuse是指通过累计分配减去累计释放得到的程序当前持有的指标，可以通过两次alloc的差值得到某一段时间程序分配的内存大小和数量。</li>
+</ul>
+<p>第三个是<strong>goroutine和系统线程</strong>的采样，它们在实现上非常相似，都是在STW之后，遍历所有goroutine/所有线程的列表，并输出堆栈，最后<code>Start The World</code>继续运行；这个采样是立刻触发的全量记录，可以通过比较两个时间点的差值来得到某一段时间段的指标。</p>
+<ul>
+<li>goroutine：记录所有用户发起且在运行中的goroutine，是入口非runtime开头的goroutine，以及runtime.main所在goroutine的信息和创建这些goroutine的调用栈；</li>
+<li>threadcreate：记录程序创建的所有系统线程的信息。<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010924984.png"
+        data-srcset="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010924984.png, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010924984.png 1.5x, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010924984.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010924984.png"
+        title="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010924984.png" /></li>
+</ul>
+<p>最后是<strong>block阻塞和锁竞争</strong>的采样，它们的采样记录都是对应操作发生的调用栈、次数和耗时，但指标的采样率含义不同，但实现上是基本相同的，都是一个主动上报的过程。</p>
+<ul>
+<li>阻塞操作的采样率是一个阈值，消耗超过阈值时间的阻塞操作才会被记录，1为每次操作都会记录；</li>
+<li>锁竞争的采样率是一个比例，运行时会通过随机数来只记录固定比例的锁操作，1为每次操作都会记录；
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010934245.png"
+        data-srcset="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010934245.png, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010934245.png 1.5x, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010934245.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010934245.png"
+        title="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206010934245.png" /><br>
+在阻塞操作或锁操作发生时，会计算出消耗的时间，连同调用栈一起主动上报给采样器，采样器根据采样率可能会丢弃一些记录。在采样时，采样器会遍历已经记录的信息，统计具体操作的次数、调用栈和总耗时。和堆内存一样，可以对比两个时间点的差值计算出一段时间内的操作指标。</li>
+</ul>
+<p>至此，整个pprof实战、常用指标和它们实现的原理有了初步了解。这次实战只是模拟的一个pprof性能分析的小场景，但排查思路是通用的，对于解决性能问题和性能调优是十分有帮助的。</p>
+<h4 id="案例">案例</h4>
+<p>接下来了解在工程中进行性能调优的实际案例。程序优化从不同的应用层次，分为业务服务优化、基础库优化和Go语言优化。</p>
+<ul>
+<li>业务服务：直接提供功能的程序，比如专门处理用户评论操作的程序；</li>
+<li>基础库：提供通用功能的程序，主要是针对业务服务提供功能，比如监控组件，负责收集业务服务的运行指标；</li>
+<li>Go语言本身的优化。</li>
+</ul>
+<p>以下是系统部署简单示意图，客户端请求经过网关转发，由不同的业务服务处理，而业务服务可能依赖其他的服务，也可能依赖存储、消息队列等组件。<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206011358378.png"
+        data-srcset="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206011358378.png, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206011358378.png 1.5x, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206011358378.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206011358378.png"
+        title="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206011358378.png" /></p>
+<ul>
+<li>服务：能单独部署，承载一定功能的程序；</li>
+<li>依赖：Service A的功能实现依赖Service B的响应结果，Service B就是Service A的依赖；</li>
+<li>调用链路：支持一个接口请求的相关服务集合及其相互之间的依赖关系；</li>
+<li>基础库：公共的工具包、中间件。</li>
+</ul>
+<p>业务服务优化主要流程：</p>
+<ul>
+<li>建立服务性能评估手段；</li>
+<li>分析性能数据，定位性能瓶颈；
+用pprof采样性能数据，分析服务表现；</li>
+<li>重点优化项改造；
+发现性能瓶颈，进行服务改造，重构代码，使用更高效的组件；</li>
+<li>优化效果验证；
+通过压测对比和正确性验证之后，服务可以上线进行实际收益评估。</li>
+</ul>
+<p>整个流程循环并行执行，每个优化点可能不同，可以分别评估验证。</p>
+<p><strong>建立服务性能评估手段：</strong></p>
+<ul>
+<li>服务性能评估方式：<br>
+单独benchmark无法满足复杂逻辑分析；<br>
+不同负载情况下性能表现差异；</li>
+<li>请求流量构造：<br>
+不同请求参数覆盖逻辑不同；<br>
+尽量模拟真实流量情况，分析真正性能瓶颈；</li>
+<li>压测范围：单机压测和集群压测；</li>
+<li>性能数据采集：单机性能数据和集群性能数据；<br>
+录制线上的请求流量，通过控制回放速度来对服务进行测试，测试范围可以是单个实例，也可以是整个集群，同样性能采集也会区分单机和集群。</li>
+</ul>
+<p>服务性能评估手段的产出是一个服务的性能指标分析报告，比如压测报告会统计压测期间服务的各项监控指标，包括qps，延迟等内容；同时在压测过程中，可以采集服务的pprof数据，使用刚刚实践的方式分析性能问题。</p>
+<p><strong>分析性能数据，定位性能瓶颈：</strong></p>
+<ul>
+<li>使用库不规范；<br>
+业务服务常见的性能问题可能是使用基础组件不规范，比如每次使用配置都会进行json解析，拿到配置项，实际组件内部提供了缓存机制，只有数据变更的时候才会重新解析json；<br>
+又比如日志使用不规范，一部分是调优日志发布到线上，一部分是线上服务在不同的调用链路上数据有差别，测试场景日志量能够接收，但到了真实线上全景场景，会导致日志量增加，影响性能。</li>
+<li>高并发场景优化不足；<br>
+服务有高峰期和底峰期，监控组件的CPU资源等占用变化较大，主要原因是监控数据上报是同步请求，在请求量上涨，监控打点数据量增加，达到性能瓶颈，造成阻塞，影响业务逻辑的处理，后续改成异步上报提升性能。</li>
+</ul>
+<p><strong>重点优化项改造：</strong><br>
+定位性能瓶颈后，也进行了对应的修复手段，能直接发布上线吗？<br>
+性能优化的前提是保证<strong>正确性</strong>，所以在变动较大的性能优化上线之前，需要进行正确性验证。由于线上的场景和流程太多，要借助自动化手段保证优化后程序的正确性。<br>
+同样是线上请求录制，这里不仅包含请求参数录制，还会录制线上的返回内容，重放时对比线上的返回内容和优化后服务的返回内容进行正确性验证。</p>
+<p><strong>优化效果验证：</strong></p>
+<ul>
+<li>重复压测验证；
+查看是否达到期望的优化，记录真正的优化效果；<br>
+同时压测不能保证和线上表现完全一致，有时还要通过线上的表现再进行分析改进，是一个长期的过程；</li>
+<li>上线评估优化结果；
+关注服务监控，逐步放量，收集性能数据；</li>
+</ul>
+<p><strong>进一步优化，服务整体链路分析：</strong><br>
+以上优化都是针对单个服务的优化过程，从更高的视角，查看是否还有性能优化空间；</p>
+<ul>
+<li>规范上游服务调用接口，明确场景需求；</li>
+<li>分析链路，通过业务流程优化提升服务性能；
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206011358378.png"
+        data-srcset="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206011358378.png, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206011358378.png 1.5x, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206011358378.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206011358378.png"
+        title="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206011358378.png" /><br>
+在熟悉服务的整体部署情况以后，可以针对具体的接口链路进行分析调优；比如Service A调用Service B是否存在重复调用的情况，调用时是否更小的结果数据集就能满足需求，接口是否一定要实时数据，能否在Service A进行缓存，减轻调用压力等等。<br>
+这种优化需要结合特定业务场景，但能合理利用资源。</li>
+</ul>
+<p>适用范围更广的是基础库的优化。比如在实际业务服务中，为了评估某些功能上线后的效果，需要进行AB实验（一种验证假设方法，核心方法以及原理分别是对照实验和假设检验），查看不同策略对核心指标的影响，很多服务就会使用AB实验的SDK，如果优化AB组件库的性能，那用到的服务都会有性能提升。<br>
+优化过程：</p>
+<ul>
+<li>分析基础库核心逻辑和性能瓶颈；<br>
+设计完善改造方案，数据按需获取，数据序列化协议优化；</li>
+<li>内部压测验证；</li>
+<li>推广业务服务落地验证。</li>
+</ul>
+<p>最基础的是编译器和runtime的优化。这些优化对于业务服务接入十分简单，只需要调整编译配置，通用性很强。
+优化过程：</p>
+<ul>
+<li>优化内存分配策略；</li>
+<li>优化代码编译流程，生成更高效的程序；</li>
+<li>内部压测验证；</li>
+<li>推广业务服务落地验证。</li>
+</ul>
+<h3 id="总结">总结</h3>
+<p>至此，整个高质量编程与性能调优实战课程总结归纳完毕，在这门课学到了很多。对于实际工作中服务性能优化有所了解，算是入个门不过分吧；对于如何分析性能问题，服务优化的原则和优化流程都进行了学习。同时也对性能分析工具pprof的基本原理，相关使用操作和如何排查性能问题，进行了简单的入门实践。<br>
+收获很多，十分感谢张雷老师的授课讲解！</p>
+<h3 id="引用参考">引用参考</h3>
+<ol>
+<li><a href="https://gobyexample-cn.github.io" target="_blank" rel="noopener noreffer">Go by Example 中文版</a></li>
+<li><a href="https://studygolang.com/pkgdoc" target="_blank" rel="noopener noreffer">Golang标准库文档</a></li>
+<li><a href="https://geektutu.com/post/hpg-slice.html" target="_blank" rel="noopener noreffer">极客兔兔：大量内存得不到释放</a></li>
+<li><a href="https://github.com/wolfogre/go-pprof-practice" target="_blank" rel="noopener noreffer">Go pprof实战</a></li>
+</ol>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info"><div class="post-info-tag"><span><a href="/tags/%E8%B4%A8%E9%87%8F%E7%BC%96%E7%A8%8B/">质量编程</a>
+                </span></div><div class="post-info-line"><div class="post-info-mod">
+                <span>更新于 2022-05-15</span>
+            </div><div class="post-info-mod"></div>
+        </div><div class="post-info-share">
+            <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://kevinchens.github.io/2022/05/go-quality-program/" data-title="Golang高质量编程与性能调优实战" data-hashtags="质量编程"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://kevinchens.github.io/2022/05/go-quality-program/" data-hashtag="质量编程"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Linkedin" data-sharer="linkedin" data-url="https://kevinchens.github.io/2022/05/go-quality-program/"><i class="fab fa-linkedin fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Reddit" data-sharer="reddit" data-url="https://kevinchens.github.io/2022/05/go-quality-program/"><i class="fab fa-reddit fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="https://kevinchens.github.io/2022/05/go-quality-program/" data-title="Golang高质量编程与性能调优实战"><i class="fab fa-evernote fa-fw"></i></a></span>
+        </div></div><div class="post-nav"><a href="/2022/05/go-practice/" class="prev" rel="prev" title="Golang工程实践"><i class="fas fa-angle-left fa-fw"></i>Previous Post</a></div></div>
+</div><div id="comments" class="single-card"></div></article></div>
+            </main>
+            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.97.3">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.1"><i class="fas fa-hand-holding-heart fa-fw"></i> FeelIt</a>
+        </div>
+    
+        
+        <script async src=" //busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js "></script>
+    
+
+    
+        
+            <section>
+                
+                    <span id="busuanzi_container_value_site_pv"><i class="far fa-eye fa-fw"></i>
+                        
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+
+                
+                    &nbsp;|&nbsp;              
+                
+
+                
+                    <span id="busuanzi_container_value_site_uv"><i class="fa fa-user"></i>
+                        
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+            </section>
+        
+
+        
+        
+    
+<div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="http://kevinchens.github.io/">chens</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        
+    
+    
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/live2d-widget@3.1.4/lib/L2Dwidget.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/live2d-widget@3.1.4/lib/L2Dwidget.0.min.js"></script>
+
+    <script type="text/javascript">
+        L2Dwidget.init({
+            model: {
+                scale: 1,
+                hHeadPos: 0.5,
+                vHeadPos: 0.618,
+                jsonPath: 'https://cdn.jsdelivr.net/npm/live2d-widget-model-hibiki@1.0.5/assets/hibiki.model.json',       
+                
+                
+
+            },
+            display: {
+                superSample: 2,     
+                width: 145,         
+                height: 315,        
+                position: 'left',   
+                hOffset: 0,         
+                vOffset: 0,         
+            },
+            mobile: {
+                show: true,         
+                scale: 0.5,           
+                motion: true,       
+            },
+            react: {
+                opacityDefault: 0.7,  
+                opacityOnHover: 0.8,  
+            },
+            });
+    </script>
+
+
+</div>
+<script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+        .register('/sw.min.js?version=1.0.1', { scope: '/' })
+        .then(() => {
+            console.info('尘市\u00A0Service Worker Registered');
+        }, err => console.error('尘市\u00A0Service Worker registration failed: ', err));
+
+    navigator.serviceWorker
+        .ready
+        .then(() => {
+            console.info('尘市\u00A0Service Worker Ready');
+        });
+}
+</script>
+</footer>
+        </div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-chevron-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment-alt fa-fw"></i>
+            </a></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/copy-tex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.fill%2CArray.prototype.find%2CArray.from%2CIntersectionObserver%2CMath.sign%2CObject.assign%2CPromise%2CObject.entries%2Chtml5shiv%2CObject.values%2Cfetch%2CElement.prototype.after"></script><script src="https://cdn.jsdelivr.net/npm/object-fit-images@3.2.4/dist/ofi.min.js"></script><script src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.0/dist/autocomplete.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script src="https://cdn.jsdelivr.net/npm/typeit@7.0.4/dist/typeit.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js"></script><script src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.1/sharer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/mhchem.min.js"></script><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"chens","id-2":"chens"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script src="/js/theme.min.js"></script></body></html>
