@@ -4,9 +4,17 @@
         <link>https://kevinchens.github.io/</link>
         <description>学习记录分享的个人博客</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>iamchens@outlook.com (chens)</managingEditor>
-            <webMaster>iamchens@outlook.com (chens)</webMaster><lastBuildDate>Thu, 02 Jun 2022 14:58:51 &#43;0800</lastBuildDate>
+            <webMaster>iamchens@outlook.com (chens)</webMaster><lastBuildDate>Tue, 07 Jun 2022 20:12:01 &#43;0800</lastBuildDate>
             <atom:link href="https://kevinchens.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Git的正确使用姿势与最佳实践</title>
+    <link>https://kevinchens.github.io/2022/06/git-practice/</link>
+    <pubDate>Tue, 07 Jun 2022 20:12:01 &#43;0800</pubDate><author>iamchens@outlook.com (chens)</author><guid>https://kevinchens.github.io/2022/06/git-practice/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://w.wallhaven.cc/full/z8/wallhaven-z8egpo.png" referrerpolicy="no-referrer">
+            </div>Git的正确使用姿势与最佳实践 | 青训笔记 这是我参与「第三届青训营 -后端场」笔记创作活动的的第5篇笔记。 本篇主要内容是Git的基本使用和常用命]]></description>
+</item>
+<item>
     <title>从需求到上线全流程</title>
     <link>https://kevinchens.github.io/2022/06/demand2online/</link>
     <pubDate>Thu, 02 Jun 2022 14:58:51 &#43;0800</pubDate><author>iamchens@outlook.com (chens)</author><guid>https://kevinchens.github.io/2022/06/demand2online/</guid>

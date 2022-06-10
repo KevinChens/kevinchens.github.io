@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Git的正确使用姿势与最佳实践 - 尘市</title><meta name="description" content="git的使用与实践..."><meta property="og:title" content="Git的正确使用姿势与最佳实践" />
+<meta property="og:description" content="git的使用与实践..." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://kevinchens.github.io/2022/06/git-practice/" /><meta property="og:image" content="https://kevinchens.github.io/chens.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-06-07T20:12:01+08:00" />
+<meta property="article:modified_time" content="2022-06-07T20:12:01+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://kevinchens.github.io/chens.png"/>
+
+<meta name="twitter:title" content="Git的正确使用姿势与最佳实践"/>
+<meta name="twitter:description" content="git的使用与实践..."/>
+<meta name="application-name" content="尘市">
+<meta name="apple-mobile-web-app-title" content="尘市"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://kevinchens.github.io/2022/06/git-practice/" /><link rel="prev" href="https://kevinchens.github.io/2022/06/demand2online/" /><link rel="stylesheet" href="/css/page.min.css"><link rel="stylesheet" href="/css/home.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Git的正确使用姿势与最佳实践",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/kevinchens.github.io\/2022\/06\/git-practice\/"
+        },"image": ["https:\/\/kevinchens.github.io\/images\/Apple-Devices-Preview.webp"],"genre": "posts","keywords": "软技能","wordcount":  1762 ,
+        "url": "https:\/\/kevinchens.github.io\/2022\/06\/git-practice\/","datePublished": "2022-06-07T20:12:01+08:00","dateModified": "2022-06-07T20:12:01+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "chens"
+            },"description": "git的使用与实践..."
+    }
+    </script></head><body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="尘市"><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="https://github.com/KevinChens/kevinchens.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="尘市"><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="https://github.com/KevinChens/kevinchens.github.io" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><div class="menu-item"><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single" data-toc="enable"><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://w.wallhaven.cc/full/z8/wallhaven-z8egpo.png"
+        data-srcset="https://w.wallhaven.cc/full/z8/wallhaven-z8egpo.png, https://w.wallhaven.cc/full/z8/wallhaven-z8egpo.png 1.5x, https://w.wallhaven.cc/full/z8/wallhaven-z8egpo.png 2x"
+        data-sizes="auto"
+        alt="https://w.wallhaven.cc/full/z8/wallhaven-z8egpo.png"
+        title="git的使用与实践..." /></div><div class="single-card" data-image="true"><h2 class="single-title animated flipInX">Git的正确使用姿势与最佳实践</h2><div class="post-meta">
+                <div class="post-meta-line"><span class="post-author"><a href="http://kevinchens.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>chens</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/tools/"><i class="far fa-folder fa-fw"></i>tools</a></span></div>
+                <div class="post-meta-line"><i class="far fa-calendar-check fa-fw"></i>&nbsp;<time datetime="2022-06-07">2022-06-07</time>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1762 字</span>&nbsp;
+                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟</span>&nbsp;
+    
+
+    
+        
+
+        
+        
+            <span id="busuanzi_container_value_page_pv"><i class="far fa-eye fa-fw"></i>
+                
+                <span id="busuanzi_value_page_pv"></span>&nbsp;次阅读</span>
+        
+    
+</div>
+            </div>
+            
+            <hr><div class="details toc" id="toc-static"  data-kept="">
+                    <div class="details-summary toc-title">
+                        <span>目录</span>
+                        <span><i class="details-icon fas fa-angle-right"></i></span>
+                    </div>
+                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#git的正确使用姿势与最佳实践--青训笔记">Git的正确使用姿势与最佳实践 | 青训笔记</a>
+      <ul>
+        <li><a href="#git是什么">Git是什么</a></li>
+        <li><a href="#git基本使用方式">Git基本使用方式</a></li>
+        <li><a href="#git研发流程">Git研发流程</a></li>
+        <li><a href="#总结">总结</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </div><div class="content" id="content"><h2 id="git的正确使用姿势与最佳实践--青训笔记">Git的正确使用姿势与最佳实践 | 青训笔记</h2>
+<p>这是我参与「第三届青训营 -后端场」笔记创作活动的的第5篇笔记。</p>
+<p>本篇主要内容是Git的基本使用和常用命令的总结。</p>
+<h3 id="git是什么">Git是什么</h3>
+<p>Git是最流行的，最常用的分布式版本控制软件。<br>
+而版本控制是一种记录一个或若干文件内容变化，以便将来查阅特定版本修订情况的系统。<br>
+版本控制能够帮助我们更好地关注变更，了解到每个版本的改动是什么，方便对改动的代码进行检查，预防事故的发生；也能够随时切换到不同的版本，回滚误删改的问题代码。<br>
+为什么要学习Git</p>
+<ul>
+<li>协同工作：必备技能，业界大多数公司都是基于Git进行代码管理；</li>
+<li>开源社区：大多数开源社区都是基于Git维护，参与这些项目的开发需要Git。</li>
+</ul>
+<h3 id="git基本使用方式">Git基本使用方式</h3>
+<p><strong>Git的基本命令</strong><br>
+项目初始化：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">mkdir study
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> study
+</span></span><span class="line"><span class="cl">git init
+</span></span><span class="line"><span class="cl">vim README.md
+</span></span><span class="line"><span class="cl">git add README.md
+</span></span><span class="line"><span class="cl">git branch -M main
+</span></span><span class="line"><span class="cl">git commit -m <span class="s2">&#34;add README&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>本地配置：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">// 设置用户签名
+</span></span><span class="line"><span class="cl">git config -global user.name 用户名   
+</span></span><span class="line"><span class="cl">git config -global user.email 邮箱 
+</span></span><span class="line"><span class="cl">// instead of配置
+</span></span><span class="line"><span class="cl">git config --global url.git@github.com:.insteadOf https://github.com/
+</span></span><span class="line"><span class="cl">// 别名配置
+</span></span><span class="line"><span class="cl">git config --global alias.cin <span class="s2">&#34;commit --amend --no-edit&#34;</span>
+</span></span><span class="line"><span class="cl">// 查看详细使用方法
+</span></span><span class="line"><span class="cl">git <span class="nb">help</span> config    
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>查看remote：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">git remote -v
+</span></span><span class="line"><span class="cl">// 添加remote
+</span></span><span class="line"><span class="cl">git remote add origin_ssh git@github.com:git/git.git
+</span></span><span class="line"><span class="cl">git remote add origin_http https://github.com/git/git.git
+</span></span><span class="line"><span class="cl">// 同一个origin设置不同的push和fetch url
+</span></span><span class="line"><span class="cl">git remote add origin git@github.com:git/git
+</span></span><span class="line"><span class="cl">git remote set-url --add --push origin git@github.com:MY_REPOSITY/git
+</span></span><span class="line"><span class="cl">// 删除remote
+</span></span><span class="line"><span class="cl">git remote remove <span class="nb">alias</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>提交代码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">git add .
+</span></span><span class="line"><span class="cl">git commit -m <span class="s2">&#34;comment&#34;</span>
+</span></span><span class="line"><span class="cl">// 修改commit message
+</span></span><span class="line"><span class="cl">git commit --amend
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>远端同步：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">// 拉取代码
+</span></span><span class="line"><span class="cl">git clone addr
+</span></span><span class="line"><span class="cl">git pull origin main
+</span></span><span class="line"><span class="cl">// 拉取远端代码，不合并到当前分支
+</span></span><span class="line"><span class="cl">git fetch origin main
+</span></span><span class="line"><span class="cl">// 推送代码
+</span></span><span class="line"><span class="cl">git push origin main
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Git目录：<code>tree .git</code><br>
+rebase：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">// 实现对最近三个commit的修改
+</span></span><span class="line"><span class="cl">git rebase -i HEAD~3
+</span></span><span class="line"><span class="cl">// 1. 合并commit
+</span></span><span class="line"><span class="cl">// 2. 修改具体的commit message
+</span></span><span class="line"><span class="cl">// 3. 删除某个commit
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>分支操作：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">git branch -v         
+</span></span><span class="line"><span class="cl">git branch --all     
+</span></span><span class="line"><span class="cl">// 增删分支
+</span></span><span class="line"><span class="cl">git branch branchname
+</span></span><span class="line"><span class="cl">git branch -d branchname  
+</span></span><span class="line"><span class="cl">git branch hot-fix
+</span></span><span class="line"><span class="cl">// 切换分支
+</span></span><span class="line"><span class="cl">git checkout 分支名  
+</span></span><span class="line"><span class="cl">// 合并分支，在main下进行
+</span></span><span class="line"><span class="cl">git merge 分支名     
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>删除文件：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">// 预览将要删除的文件，加上-n这个参数，不会删除任何文件，而是展示此命令要删除的文件列表预览
+</span></span><span class="line"><span class="cl">git rm -r -n --cached fileName  
+</span></span><span class="line"><span class="cl">//确定无误后，删除文件
+</span></span><span class="line"><span class="cl">git rm -r --cached fileName
+</span></span><span class="line"><span class="cl">//提交到本地并推送到远程服务器
+</span></span><span class="line"><span class="cl">git commit -m <span class="s2">&#34;comment&#34;</span>
+</span></span><span class="line"><span class="cl">git push origin main
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>常见问题：</p>
+<ol>
+<li>为什么配置了Git，依然不能拉取代码<br>
+免密认证没有配置；<br>
+instead of没有配置，配的SSH认证使用的是HTTP认证。</li>
+<li>为什么Fetch远端分支，本地当前的分支历史没有变化<br>
+Fetch把代码拉取到本地的远端分支，不会合并到当前分支，所以当前分支没有变化。</li>
+</ol>
+<h3 id="git研发流程">Git研发流程</h3>
+<p>依托代码管理平台 Gitlab，Github，Gerrit介绍如何进行代码的开发以及团队合作。<br>
+不同的工作流：</p>
+<ul>
+<li>集中式工作流：Gerrit/SVN，依托主干分支进行开发，不存在其他分支，以fast-forward方式合并<br>
+提供强制的代码评审机制，保证代码的质量；<br>
+提供更丰富的权限功能，可以针对分支做细粒度的权限管控；<br>
+保证master的历史整洁性；<br>
+开发人员较多时，容易出现冲突；<br>
+对于多分支的支持差；<br>
+难以在项目之间形成代码复用。</li>
+<li>分支管理工作流：Github/Gitlab，有不同的开发分支，通过MR/PR合并主干分支，以自定义方式合并<br>
+Git Flow：分支类型丰富，规范严格；<br>
+GitHub Flow：只有主干分支和开发分支，规则简单；<br>
+Gitlab Flow：在主干分支和开发分支之上构建环境分支，版本分支，满足不同发布或环境的需要。</li>
+</ul>
+<p>代码合并：</p>
+<ul>
+<li>Fast-Forward：不会产生merge节点，合并后保持一个线性历史，如果target分支有更新，需要通过rebase操作更新source branch后才可以合入。<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206102316720.png"
+        data-srcset="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206102316720.png, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206102316720.png 1.5x, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206102316720.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206102316720.png"
+        title="img" /></li>
+<li>Three-Way Merge：三方合并，产生一个新的merge节点。<br>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206102319893.png"
+        data-srcset="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206102319893.png, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206102319893.png 1.5x, https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206102319893.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206102319893.png"
+        title="img" /></li>
+</ul>
+<p>如何选择合适的工作流：</p>
+<ul>
+<li>小型团队，推荐Github；<br>
+保证少量多次，最好不要一次性提交上千行代码；<br>
+提交Pull Request最少要保证CR后再合并；<br>
+主干分支尽量保持整洁性，使用fast-forward合入方式，合入前进rebase。</li>
+<li>大型团队合作，根据自己的需要指定不同的工作流，不需要局限于某种流程。</li>
+</ul>
+<h3 id="总结">总结</h3>
+<p>本篇blog从Git是什么，Git的基本使用方式和Git的研发流程三个内容对Git进行了学习。Git作为一个分布式版本控制工具，使用是十分频繁的，对于Git的常用命令一定要多熟悉多使用。对于不同的研发流程，分支管理的工作流也是不一样的，代码提交的规范也是十分重要的，比如保护分支，code review等等。熟悉Git的使用，是能够提升开发效率，提升代码质量的。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info"><div class="post-info-tag"><span><a href="/tags/%E8%BD%AF%E6%8A%80%E8%83%BD/">软技能</a>
+                </span></div><div class="post-info-line"><div class="post-info-mod">
+                <span>更新于 2022-06-07</span>
+            </div><div class="post-info-mod"></div>
+        </div><div class="post-info-share">
+            <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://kevinchens.github.io/2022/06/git-practice/" data-title="Git的正确使用姿势与最佳实践" data-hashtags="软技能"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://kevinchens.github.io/2022/06/git-practice/" data-hashtag="软技能"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Linkedin" data-sharer="linkedin" data-url="https://kevinchens.github.io/2022/06/git-practice/"><i class="fab fa-linkedin fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Reddit" data-sharer="reddit" data-url="https://kevinchens.github.io/2022/06/git-practice/"><i class="fab fa-reddit fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="https://kevinchens.github.io/2022/06/git-practice/" data-title="Git的正确使用姿势与最佳实践"><i class="fab fa-evernote fa-fw"></i></a></span>
+        </div></div><div class="post-nav"><a href="/2022/06/demand2online/" class="prev" rel="prev" title="从需求到上线全流程"><i class="fas fa-angle-left fa-fw"></i>Previous Post</a></div></div>
+</div><div id="comments" class="single-card"></div></article></div>
+            </main>
+            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.97.3">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.1"><i class="fas fa-hand-holding-heart fa-fw"></i> FeelIt</a>
+        </div>
+    
+        
+        <script async src=" //busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js "></script>
+    
+
+    
+        
+            <section>
+                
+                    <span id="busuanzi_container_value_site_pv"><i class="far fa-eye fa-fw"></i>
+                        
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+
+                
+                    &nbsp;|&nbsp;              
+                
+
+                
+                    <span id="busuanzi_container_value_site_uv"><i class="fa fa-user"></i>
+                        
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+            </section>
+        
+
+        
+        
+    
+<div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="http://kevinchens.github.io/">chens</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        
+    
+    
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/live2d-widget@3.1.4/lib/L2Dwidget.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/live2d-widget@3.1.4/lib/L2Dwidget.0.min.js"></script>
+
+    <script type="text/javascript">
+        L2Dwidget.init({
+            model: {
+                scale: 1,
+                hHeadPos: 0.5,
+                vHeadPos: 0.618,
+                jsonPath: 'https://cdn.jsdelivr.net/npm/live2d-widget-model-hibiki@1.0.5/assets/hibiki.model.json',       
+                
+                
+
+            },
+            display: {
+                superSample: 2,     
+                width: 145,         
+                height: 315,        
+                position: 'left',   
+                hOffset: 0,         
+                vOffset: 0,         
+            },
+            mobile: {
+                show: true,         
+                scale: 0.5,           
+                motion: true,       
+            },
+            react: {
+                opacityDefault: 0.7,  
+                opacityOnHover: 0.8,  
+            },
+            });
+    </script>
+
+
+</div>
+<script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+        .register('/sw.min.js?version=1.0.1', { scope: '/' })
+        .then(() => {
+            console.info('尘市\u00A0Service Worker Registered');
+        }, err => console.error('尘市\u00A0Service Worker registration failed: ', err));
+
+    navigator.serviceWorker
+        .ready
+        .then(() => {
+            console.info('尘市\u00A0Service Worker Ready');
+        });
+}
+</script>
+</footer>
+        </div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-chevron-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment-alt fa-fw"></i>
+            </a></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/copy-tex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.fill%2CArray.prototype.find%2CArray.from%2CIntersectionObserver%2CMath.sign%2CObject.assign%2CPromise%2CObject.entries%2Chtml5shiv%2CObject.values%2Cfetch%2CElement.prototype.after"></script><script src="https://cdn.jsdelivr.net/npm/object-fit-images@3.2.4/dist/ofi.min.js"></script><script src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.0/dist/autocomplete.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script src="https://cdn.jsdelivr.net/npm/typeit@7.0.4/dist/typeit.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js"></script><script src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.1/sharer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/mhchem.min.js"></script><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"chens","id-2":"chens"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script src="/js/theme.min.js"></script></body></html>
