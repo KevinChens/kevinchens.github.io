@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>软技能 - 标签 - 尘市</title>
+        <link>https://kevinchens.github.io/tags/%E8%BD%AF%E6%8A%80%E8%83%BD/</link>
+        <description>软技能 - 标签 - 尘市</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>iamchens@outlook.com (chens)</managingEditor>
+            <webMaster>iamchens@outlook.com (chens)</webMaster><lastBuildDate>Thu, 02 Jun 2022 14:58:51 &#43;0800</lastBuildDate><atom:link href="https://kevinchens.github.io/tags/%E8%BD%AF%E6%8A%80%E8%83%BD/" rel="self" type="application/rss+xml" /><item>
+    <title>从需求到上线全流程</title>
+    <link>https://kevinchens.github.io/2022/06/demand2online/</link>
+    <pubDate>Thu, 02 Jun 2022 14:58:51 &#43;0800</pubDate><author>iamchens@outlook.com (chens)</author><guid>https://kevinchens.github.io/2022/06/demand2online/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://w.wallhaven.cc/full/q2/wallhaven-q2e7wd.png" referrerpolicy="no-referrer">
+            </div>从需求到上线全流程 | 青训笔记 这是我参与「第三届青训营 -后端场」笔记创作活动的的第4篇笔记。 本篇主要内容是后端开发日常的整体流程，对从需求到上]]></description>
+</item>
+</channel>
+</rss>
