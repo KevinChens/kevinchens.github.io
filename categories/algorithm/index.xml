@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>algorithm - 分类 - 尘市</title>
+        <link>https://kevinchens.github.io/categories/algorithm/</link>
+        <description>algorithm - 分类 - 尘市</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>iamchens@outlook.com (chens)</managingEditor>
+            <webMaster>iamchens@outlook.com (chens)</webMaster><lastBuildDate>Thu, 23 Jun 2022 15:13:47 &#43;0800</lastBuildDate><atom:link href="https://kevinchens.github.io/categories/algorithm/" rel="self" type="application/rss+xml" /><item>
+    <title>algorithm-pattern | 二叉树</title>
+    <link>https://kevinchens.github.io/2022/06/binary-tree-traversing/</link>
+    <pubDate>Thu, 23 Jun 2022 15:13:47 &#43;0800</pubDate><author>iamchens@outlook.com (chens)</author><guid>https://kevinchens.github.io/2022/06/binary-tree-traversing/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206231559148.jpg" referrerpolicy="no-referrer">
+            </div>binary-tree 本系列是algorithm-pattern的学习笔记。主要目的是为了合理刷题，积累算法模板，有套路的进行leetcode刷题。安利一下该仓]]></description>
+</item>
+</channel>
+</rss>
