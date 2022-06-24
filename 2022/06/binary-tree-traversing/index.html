@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/kevinchens.github.io\/2022\/06\/binary-tree-traversing\/"
-        },"genre": "posts","keywords": "binarytree","wordcount":  1778 ,
+        },"genre": "posts","keywords": "binarytree","wordcount":  1836 ,
         "url": "https:\/\/kevinchens.github.io\/2022\/06\/binary-tree-traversing\/","datePublished": "2022-06-23T15:13:47+08:00","dateModified": "2022-06-23T15:13:47+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -110,7 +110,7 @@
         alt="https://raw.githubusercontent.com/KevinChens/blog-image-bed/main/imgs/202206231559148.jpg"
         title="刷题用模板，套路简单，谁用谁知道..." /></div><div class="single-card" data-image="true"><h2 class="single-title animated flipInX">algorithm-pattern | 二叉树</h2><div class="post-meta">
                 <div class="post-meta-line"><span class="post-author"><a href="https://kevinchens.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>chens</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/algorithm/"><i class="far fa-folder fa-fw"></i>algorithm</a>&nbsp;<a href="/categories/leetcode/"><i class="far fa-folder fa-fw"></i>leetcode</a></span></div>
-                <div class="post-meta-line"><i class="far fa-calendar-check fa-fw"></i>&nbsp;<time datetime="2022-06-23">2022-06-23</time>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1778 字</span>&nbsp;
+                <div class="post-meta-line"><i class="far fa-calendar-check fa-fw"></i>&nbsp;<time datetime="2022-06-23">2022-06-23</time>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1836 字</span>&nbsp;
                     <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟</span>&nbsp;
     
 
@@ -136,14 +136,14 @@
   <ul>
     <li><a href="#binary-tree">binary-tree</a>
       <ul>
-        <li><a href="#遍历分类">遍历分类</a></li>
+        <li><a href="#classification">classification</a></li>
         <li><a href="#preorder">preOrder</a></li>
         <li><a href="#inorder">inOrder</a></li>
         <li><a href="#postorder">postOrder</a></li>
         <li><a href="#top-down-and-bottom-up">top-down and bottom-up</a></li>
         <li><a href="#levelorder">levelOrder</a></li>
         <li><a href="#summary">summary</a></li>
-        <li><a href="#参考引用">参考引用</a></li>
+        <li><a href="#reference">reference</a></li>
       </ul>
     </li>
   </ul>
@@ -151,21 +151,22 @@
                 </div><div class="content" id="content"><h2 id="binary-tree">binary-tree</h2>
 <p>本系列是<a href="https://greyireland.gitbook.io/algorithm-pattern/" target="_blank" rel="noopener noreffer">algorithm-pattern</a>的学习笔记。主要目的是为了合理刷题，积累算法模板，有套路的进行leetcode刷题。安利一下该<a href="https://github.com/greyireland/algorithm-pattern" target="_blank" rel="noopener noreffer">仓库</a>，作者总结归纳的不错，适合作为leetcode刷题的参考资料。</p>
 <p>模板能够帮助我们，以不变应万变；但模板不是教条主义，要具体问题具体分析，能够根据模板举一反三。</p>
-<p>本篇blog是<strong>二叉树篇</strong>，主要内容是二叉树的遍历模板的积累，4种遍历方式，2种遍历思想。</p>
-<h3 id="遍历分类">遍历分类</h3>
+<p>本篇blog是<strong>二叉树篇</strong>，主要内容是二叉树的遍历模板的积累，4种遍历方式，2种遍历思想。<br>
+4种遍历方式的snippet放在了<a href="https://gist.github.com/KevinChens/83a0e148d65acd52e01aeed0cb7b47bf" target="_blank" rel="noopener noreffer">我的gist主页</a>，易于大家自取积累snippet。</p>
+<h3 id="classification">classification</h3>
 <p>二叉树的遍历主要有两种，DFS和BFS。</p>
 <p>对于DFS而言，能够<strong>以root结点的访问顺序</strong>细分为前序遍历、中序遍历和后序遍历。DFS的一个遍历特点是<strong>左子树优先右子树访问</strong>。</p>
 <p>以一个简单的二叉树为例，展示三种遍历的结果。<br>
 <div class="mermaid" id="id-1"></div></p>
 <p>前序遍历-preOrder：<br>
 <div class="mermaid" id="id-2"></div></p>
-<p>中序遍历-inOrder:
+<p>中序遍历-inOrder:<br>
 <div class="mermaid" id="id-3"></div></p>
-<p>后序遍历-postOrder:
+<p>后序遍历-postOrder:<br>
 <div class="mermaid" id="id-4"></div></p>
 <p>对于三种遍历而言，从逻辑上又能够分为递归遍历和非递归遍历。</p>
 <p>而BFS遍历本质是层序遍历，就像排队一样，一层结点遍历完再遍历下一层结点。以上图二叉树为例，BFS遍历结果如下。<br>
-层序遍历-levelOrder：
+层序遍历-levelOrder：<br>
 <div class="mermaid" id="id-5"></div></p>
 <p>下面就分别总结一下4种遍历方式的模板，以一颗简单的二叉树结构为例。</p>
 <div class="highlight"><div class="chroma">
@@ -413,9 +414,11 @@
 </div>
 </div><h3 id="top-down-and-bottom-up">top-down and bottom-up</h3>
 <p>同样的对于DFS有三种不同的遍历方式，但也有两种遍历思想，自顶向下和自底向上。</p>
-<p>top-down：将最终结果通过指针参数传递
-bottom-up：先递归返回结果，最后将其合并，也就是分而治之</p>
-<p>以前序遍历示例两种不同的遍历思想。
+<ul>
+<li>top-down：将最终结果通过指针参数传递</li>
+<li>bottom-up：先递归返回结果，最后将其合并，也就是分而治之</li>
+</ul>
+<p>以前序遍历示例两种不同的遍历思想。<br>
 top-down:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -572,8 +575,9 @@ top-down:</p>
 </div><h3 id="summary">summary</h3>
 <p>本篇blog主要是对二叉树的4种遍历方式进行了总结，DFS包括了前序遍历、中序遍历和后序遍历，而BFS本质就是层序遍历。<br>
 而DFS的实现又能够分为递归实现和非递归实现。同时也引入了自顶向下和自底向上两种思想。<br>
-不断进行模板总结，知识类比细化，对于个人而言，是一个不错的学习算法的方式。在下篇blog将对4种遍历方式进行实践，通过leetcode感受模板的快乐。</p>
-<h3 id="参考引用">参考引用</h3>
+不断进行模板总结，知识类比细化，对于个人而言，是一个不错的学习算法的方式。在下篇blog将对4种遍历方式进行实践，通过leetcode感受模板的快乐。<br>
+欢迎大家评论转载，多多发表自己的意见或建议。</p>
+<h3 id="reference">reference</h3>
 <ol>
 <li><a href="https://github.com/greyireland/algorithm-pattern" target="_blank" rel="noopener noreffer">algorithm-pattern仓库</a></li>
 </ol>
@@ -684,4 +688,4 @@ if ('serviceWorker' in navigator) {
                 <i class="fas fa-chevron-up fa-fw"></i>
             </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
                 <i class="fas fa-comment-alt fa-fw"></i>
-            </a></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/copy-tex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.fill%2CArray.prototype.find%2CArray.from%2CIntersectionObserver%2CMath.sign%2CObject.assign%2CPromise%2CObject.entries%2Chtml5shiv%2CObject.values%2Cfetch%2CElement.prototype.after"></script><script src="https://cdn.jsdelivr.net/npm/object-fit-images@3.2.4/dist/ofi.min.js"></script><script src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.0/dist/autocomplete.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.c0d4c2d47e6ad0c6cc47b968594963be5a59a9beaa7368c17cb15757f01dbc9c1af29093d88f839bcf982c829d22f48d29c0b0b83e89234ce1e147fb60a1587e.js" integrity="sha512-wNTC1H5q0MbMR7loWUljvlpZqb6qc2jBfLFXV/AdvJwa8pCT2I&#43;Dm8&#43;YLIKdIvSNKcCwuD6JI0zh4Uf7YKFYfg=="></script><script src="/lib/lunr/lunr.zh.min.6ac8b835ec2cc1ede13b2f5e70d28e5b82b53ba2c3a86e3316ad142cd4cb2b237c644dce8ac0642507ef849340c2edbaa8f10aca7a7c5a67fb9ae5f769531dde.js" integrity="sha512-asi4Newswe3hOy9ecNKOW4K1O6LDqG4zFq0ULNTLKyN8ZE3OisBkJQfvhJNAwu26qPEKynp8Wmf7muX3aVMd3g=="></script><script src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script src="https://cdn.jsdelivr.net/npm/typeit@7.0.4/dist/typeit.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js"></script><script src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.1/sharer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/mhchem.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mermaid@8.11.4/dist/mermaid.min.js"></script><script src="/sw.min.100895851fc183b23792349136e782532081cfc67a5020892e17c4957e6f2078dd3e52f7e5335e0cab13c997aaaaf1e78f6b7e0571e4eb0be887be5e725d1dec.js" integrity="sha512-EAiVhR/Bg7I3kjSRNueCUyCBz8Z6UCCJLhfElX5vIHjdPlL35TNeDKsTyZeqqvHnj2t&#43;BXHk6wvoh75ecl0d7A=="></script><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"kevinchens/kevinchens.github.io"}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"graph TB\nA((root))\nB((left))\nC((right))\nA--\u003eB\nA--\u003eC","id-2":"graph LR\nA((root))\nB((left))\nC((right))\nA--\u003eB\nB--\u003eC","id-3":"graph LR\nA((root))\nB((left))\nC((right))\nB--\u003eA\nA--\u003eC","id-4":"graph LR\nA((root))\nB((left))\nC((right))\nB--\u003eC\nC--\u003eA","id-5":"graph LR\nA((root))\nB((left))\nC((right))\nA-.-B\nB--\u003eC","id-6":"chens","id-7":"chens"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-6":["id-6"],"id-7":["id-7"]},"duration":-1,"speed":100}};</script><script src="/js/theme.min.22e8ceee81c7ec0367dff588ccc657f78feb2a29144aba12b25994709feab15b58c870f5111a1a68185a8722ac58d9a58919adbb3f65961cc41f58ee1fc6d364.js" integrity="sha512-IujO7oHH7ANn3/WIzMZX94/rKikUSroSslmUcJ/qsVtYyHD1ERoaaBhahyKsWNmliRmtuz9llhzEH1juH8bTZA=="></script></body></html>
+            </a></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/copy-tex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.fill%2CArray.prototype.find%2CArray.from%2CIntersectionObserver%2CMath.sign%2CObject.assign%2CPromise%2CObject.entries%2Chtml5shiv%2CObject.values%2Cfetch%2CElement.prototype.after"></script><script src="https://cdn.jsdelivr.net/npm/object-fit-images@3.2.4/dist/ofi.min.js"></script><script src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.0/dist/autocomplete.min.js"></script><script src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.c0d4c2d47e6ad0c6cc47b968594963be5a59a9beaa7368c17cb15757f01dbc9c1af29093d88f839bcf982c829d22f48d29c0b0b83e89234ce1e147fb60a1587e.js" integrity="sha512-wNTC1H5q0MbMR7loWUljvlpZqb6qc2jBfLFXV/AdvJwa8pCT2I&#43;Dm8&#43;YLIKdIvSNKcCwuD6JI0zh4Uf7YKFYfg=="></script><script src="/lib/lunr/lunr.zh.min.6ac8b835ec2cc1ede13b2f5e70d28e5b82b53ba2c3a86e3316ad142cd4cb2b237c644dce8ac0642507ef849340c2edbaa8f10aca7a7c5a67fb9ae5f769531dde.js" integrity="sha512-asi4Newswe3hOy9ecNKOW4K1O6LDqG4zFq0ULNTLKyN8ZE3OisBkJQfvhJNAwu26qPEKynp8Wmf7muX3aVMd3g=="></script><script src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script src="https://cdn.jsdelivr.net/npm/typeit@7.0.4/dist/typeit.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js"></script><script src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.1/sharer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/mhchem.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mermaid@8.11.4/dist/mermaid.min.js"></script><script src="/sw.min.100895851fc183b23792349136e782532081cfc67a5020892e17c4957e6f2078dd3e52f7e5335e0cab13c997aaaaf1e78f6b7e0571e4eb0be887be5e725d1dec.js" integrity="sha512-EAiVhR/Bg7I3kjSRNueCUyCBz8Z6UCCJLhfElX5vIHjdPlL35TNeDKsTyZeqqvHnj2t&#43;BXHk6wvoh75ecl0d7A=="></script><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"kevinchens/kevinchens.github.io"}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"graph TB\nA((root))\nB((left))\nC((right))\nA--\u003eB\nA--\u003eC","id-2":"graph LR\nA((root))\nB((left))\nC((right))\nA--\u003eB\nB--\u003eC\nstyle A fill: #76BA99","id-3":"graph LR\nA((root))\nB((left))\nC((right))\nB--\u003eA\nA--\u003eC\nstyle A fill: #76BA99","id-4":"graph LR\nA((root))\nB((left))\nC((right))\nB--\u003eC\nC--\u003eA\nstyle A fill: #76BA99","id-5":"graph LR\nA((root))\nB((left))\nC((right))\nA-.-B\nB--\u003eC","id-6":"chens","id-7":"chens"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-6":["id-6"],"id-7":["id-7"]},"duration":-1,"speed":100}};</script><script src="/js/theme.min.22e8ceee81c7ec0367dff588ccc657f78feb2a29144aba12b25994709feab15b58c870f5111a1a68185a8722ac58d9a58919adbb3f65961cc41f58ee1fc6d364.js" integrity="sha512-IujO7oHH7ANn3/WIzMZX94/rKikUSroSslmUcJ/qsVtYyHD1ERoaaBhahyKsWNmliRmtuz9llhzEH1juH8bTZA=="></script></body></html>

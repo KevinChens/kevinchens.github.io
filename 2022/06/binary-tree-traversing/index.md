@@ -8,8 +8,9 @@
 模板能够帮助我们，以不变应万变；但模板不是教条主义，要具体问题具体分析，能够根据模板举一反三。  
 
 本篇blog是**二叉树篇**，主要内容是二叉树的遍历模板的积累，4种遍历方式，2种遍历思想。  
+4种遍历方式的snippet放在了[我的gist主页](https://gist.github.com/KevinChens/83a0e148d65acd52e01aeed0cb7b47bf)，易于大家自取积累snippet。  
 
-### 遍历分类
+### classification
 
 二叉树的遍历主要有两种，DFS和BFS。  
 
@@ -33,9 +34,10 @@ B((left))
 C((right))
 A-->B
 B-->C
+style A fill: #76BA99
 {{< /mermaid >}}
 
-中序遍历-inOrder: 
+中序遍历-inOrder:   
 {{< mermaid >}}
 graph LR
 A((root))
@@ -43,9 +45,10 @@ B((left))
 C((right))
 B-->A
 A-->C
+style A fill: #76BA99
 {{</mermaid >}}
 
-后序遍历-postOrder: 
+后序遍历-postOrder:   
 {{< mermaid >}}
 graph LR
 A((root))
@@ -53,12 +56,13 @@ B((left))
 C((right))
 B-->C
 C-->A
+style A fill: #76BA99
 {{< /mermaid >}}
 
-对于三种遍历而言，从逻辑上又能够分为递归遍历和非递归遍历。
+对于三种遍历而言，从逻辑上又能够分为递归遍历和非递归遍历。  
 
 而BFS遍历本质是层序遍历，就像排队一样，一层结点遍历完再遍历下一层结点。以上图二叉树为例，BFS遍历结果如下。  
-层序遍历-levelOrder：
+层序遍历-levelOrder：  
 {{< mermaid >}}
 graph LR
 A((root))
@@ -68,7 +72,7 @@ A-.-B
 B-->C
 {{< /mermaid >}}
 
-下面就分别总结一下4种遍历方式的模板，以一颗简单的二叉树结构为例。
+下面就分别总结一下4种遍历方式的模板，以一颗简单的二叉树结构为例。  
 ```go
 type TreeNode struct {
     Val int
@@ -198,11 +202,10 @@ func postOrder(root *TreeNode) []int {
 
 ### top-down and bottom-up
 同样的对于DFS有三种不同的遍历方式，但也有两种遍历思想，自顶向下和自底向上。
+- top-down：将最终结果通过指针参数传递  
+- bottom-up：先递归返回结果，最后将其合并，也就是分而治之  
 
-top-down：将最终结果通过指针参数传递
-bottom-up：先递归返回结果，最后将其合并，也就是分而治之
-
-以前序遍历示例两种不同的遍历思想。
+以前序遍历示例两种不同的遍历思想。  
 top-down:
 ```go
 func preOrder(root *TreeNode) []int {
@@ -243,9 +246,9 @@ func dfs(root *TreeNode) []int {
     return ans
 }
 ```
-自底向上，分而治之，核心是每个部分都能够独立解决，最后将每个部分的结果进行归并汇总，就是整个问题的结果。
+自底向上，分而治之，核心是每个部分都能够独立解决，最后将每个部分的结果进行归并汇总，就是整个问题的结果。  
 
-分而治之的思想应用是十分广泛的，比如快速排序，归并排序等；这里只是简单引入一下该思想，后面同样会对于分治法进行模板总结。
+分而治之的思想应用是十分广泛的，比如快速排序，归并排序等；这里只是简单引入一下该思想，后面同样会对于分治法进行模板总结。  
 
 ### levelOrder
 层序遍历：利用queue存储每层结点，保证结点访问的层序性
@@ -289,8 +292,9 @@ func levelOrder(root *TreeNode) [][]int {
 本篇blog主要是对二叉树的4种遍历方式进行了总结，DFS包括了前序遍历、中序遍历和后序遍历，而BFS本质就是层序遍历。  
 而DFS的实现又能够分为递归实现和非递归实现。同时也引入了自顶向下和自底向上两种思想。  
 不断进行模板总结，知识类比细化，对于个人而言，是一个不错的学习算法的方式。在下篇blog将对4种遍历方式进行实践，通过leetcode感受模板的快乐。  
+欢迎大家评论转载，多多发表自己的意见或建议。  
 
-### 参考引用
+### reference
 
 1. [algorithm-pattern仓库](https://github.com/greyireland/algorithm-pattern)
 
